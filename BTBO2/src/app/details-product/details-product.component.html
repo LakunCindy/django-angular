@@ -1,0 +1,40 @@
+<p>details-product works!</p>
+<div id="infosProduct">
+    <h1>Page d'affichage du produit</h1>
+    <select ng-model="productList" (change)='getProductId($event.target.value)'>
+        <option *ngFor="let productList of products" value="{{productList.id}}" >{{productList.name}}</option>
+    </select> 
+
+    <ul *ngIf="productList">
+        <li>
+           Id : {{product.id}}
+        </li>
+        <li>
+           Nom : {{product.name}}
+        </li>
+        <li>
+           Prix : {{product.price}}
+        </li>
+        <li>
+            Prix en promotion : {{product.price}}
+         </li>
+         <li>
+            Pourcentage de promotion : {{product.discount}}
+         </li>                    
+        <li>
+            Quantité stock : {{product.quantity_stock}} 
+            <button (click)="afficherUpdateStock=true">Modifier Quantité</button>
+            <div *ngIf="afficherUpdateStock == true">
+                <input ([ngModel])="quantityChange" id="input_quantity"/>
+                <button (click)="addStock(quantityChange, product)">Ajouter</button>
+                <button> Enlever</button>
+            </div>
+         </li>        
+        <li>
+            Nombre d'article vendus : {{product.quantity_sold}}
+         </li>
+        <li>
+            Commentaire : {{product.comments}}
+         </li>        
+    </ul>
+</div>
