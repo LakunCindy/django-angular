@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { IProduct, Product } from '../services/product.model';
 import { Observable } from 'rxjs';
 import { SERVER_API } from '../app.contants'
-import { environment } from '../../environments/environment'
 
 type EntityResponseType = HttpResponse<Product>;
 type EntityResponseTypeArray = HttpResponse<Product[]>;
@@ -14,7 +13,7 @@ type EntityResponseTypeArray = HttpResponse<Product[]>;
 
 export class ProductsService {
 
-  public resourceUrlApi = SERVER_API;
+  public resourceUrlApi = 'http://127.0.0.1:8000';
 
   constructor(protected http: HttpClient) { }
 
