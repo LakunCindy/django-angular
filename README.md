@@ -9,6 +9,6 @@ Pour la partie serveur :
 
 
 Pour la partie client : 
-    -Démarrage : A la racine (BTBO2) : npm i puis ng serve
+    -Démarrage : A la racine (BTBO2) : npm i puis npm start
 
 Pour travailler sur la bonne branch : git checkout develop
