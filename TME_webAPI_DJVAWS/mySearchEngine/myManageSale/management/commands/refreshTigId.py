@@ -14,8 +14,8 @@ class Command(BaseCommand):
         jsondata = response.json()
         ProductSale.objects.all().delete()
         for product in jsondata:
-                serializer = ProductSaleSerializer(data={'tigID':str(product['id'])})
-                if serializer.is_valid():
-                    serializer.save()
+                serializer_tigId = ProductSaleSerializer(data={'tigId':str(product['id'])})
+                if serializer_tigId.is_valid():
+                    serializer_tigId.save()
                     self.stdout.write(self.style.SUCCESS('['+time.ctime()+'] Successfully added product id="%s"' % product['id']))
         self.stdout.write('['+time.ctime()+'] Data refresh terminated.')

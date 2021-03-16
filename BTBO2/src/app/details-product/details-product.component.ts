@@ -46,8 +46,6 @@ export class DetailsProductComponent implements OnInit {
   }
 
   addStock(quantityChange, product){
-    product.quantity_stock = product.quantity_stock + quantityChange;
-    this.getProductId(product.id);
     this.productsService.incrementProduct(product.id,quantityChange).subscribe(res => {
       console.log(res);
     },
