@@ -1,0 +1,25 @@
+.row {
+    margin-top: 10px;
+}
+
+.col-sm-12 {
+    text-align: center;
+}
+
+.card-header {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.btn-primary {
+    margin-left:10px;
+    margin-right:10px;
+    margin-bottom:10px;
+    background-color: #fe881c;
+    border-color: #fe881c;
+}
