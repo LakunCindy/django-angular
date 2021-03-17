@@ -2,6 +2,8 @@
 
 
 Pour travailler sur la bonne branch : git checkout develop
+
+
 Pour la partie serveur :
     - Démarrage : A la racine de TME_webAPI : py -m venv env 
                                              .\env\Scripts\activate
