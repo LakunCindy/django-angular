@@ -1,5 +1,7 @@
 # django-angular
 
+
+Pour travailler sur la bonne branch : git checkout develop
 Pour la partie serveur :
     - Démarrage : A la racine de TME_webAPI : py -m venv env 
                                              .\env\Scripts\activate
@@ -11,4 +13,3 @@ Pour la partie serveur :
 Pour la partie client : 
     -Démarrage : A la racine de BTBO2 : npm i puis npm start
 
-Pour travailler sur la bonne branch : git checkout develop
