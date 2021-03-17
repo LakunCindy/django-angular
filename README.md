@@ -1,5 +1,9 @@
 # django-angular
 
+
+Pour travailler sur la bonne branch : git checkout develop
+
+
 Pour la partie serveur :
     - Démarrage : A la racine de TME_webAPI : py -m venv env 
                                              .\env\Scripts\activate
@@ -11,7 +15,5 @@ Pour la partie serveur :
 
 Pour la partie client : 
     -Démarrage : A la racine de BTBO2 : npm i puis npm start
-
-Pour travailler sur la bonne branch : git checkout develop
 
 dans la partie my search engine pour acceder a la page hello il faut faire curl http://127.0.0.1:8000/hello/ --header "Authorization:Bearer token"
