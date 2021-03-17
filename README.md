@@ -1,7 +1,7 @@
 # django-angular
 
 Pour la partie serveur :
-    - Démarrage : A la racine (TME_webAPI) : py -m venv env 
+    - Démarrage : A la racine de TME_webAPI : py -m venv env 
                                              .\env\Scripts\activate
                   mySearchEngine: pip3 install django djangorestframework requests
                                   pip install django-cors-headers
@@ -9,6 +9,6 @@ Pour la partie serveur :
 
 
 Pour la partie client : 
-    -Démarrage : A la racine (BTBO2) : npm i puis npm start
+    -Démarrage : A la racine de BTBO2 : npm i puis npm start
 
 Pour travailler sur la bonne branch : git checkout develop
