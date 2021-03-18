@@ -39,6 +39,17 @@ class RedirectionListeDeProduits(APIView):
 #        NO DEFITION of post --> server will return "405 NOT ALLOWED"
 
 class RedirectionDetailProduit(APIView):
+    def get_object_QuantityInStock(self, id):
+        try:
+            return QuantityInStock.objects.get(tigId=id)
+        except QuantityInStock.DoesNotExist:
+            raise Http404
+    
+    def get_object_Discount(self, id):
+        try:
+            return ProductSale.objects.get(tigId=id)
+        except ProductSale.DoesNotExist:
+            raise Http404
     def get_object(self, pk):
         try:
             response = requests.get(baseUrl+'product/'+str(pk)+'/')
@@ -48,8 +59,15 @@ class RedirectionDetailProduit(APIView):
             raise Http404
     def get(self, request, pk, format=None):
         response = requests.get(baseUrl+'product/'+str(pk)+'/')
-        jsondata = response.json()
-        return Response(jsondata)
+        prod = response.json()
+        prodBDQuantity = self.get_object_QuantityInStock(prod['id'])
+        prodBDDiscount = self.get_object_Discount(prod['id'])
+        serializer = QuantityInStockSerializer(prodBDQuantity)
+        serializer_discount = ProductSaleSerializer(prodBDDiscount)
+        prod['quantity'] = serializer.data['quantity']
+        prod['discount'] = serializer_discount.data['discount']
+        prod['sale'] = serializer_discount.data['sale']		
+        return Response(prod)
 #    def put(self, request, pk, format=None):
 #        NO DEFITION of put --> server will return "405 NOT ALLOWED"
 #    def delete(self, request, pk, format=None):
