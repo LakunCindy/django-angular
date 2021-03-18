@@ -57,4 +57,47 @@ class DeleteSaleProductDetail(APIView):
             return Response(product)
         else:
             return Response('id not found',status=404)
-        
+
+class UpdateSale(APIView):
+    def get_object(self, id,newprice):
+        try:
+            return ProductSale.objects.get(tigId=id)
+        except ProductSale.DoesNotExist:
+            erreur={}
+            erreur['message']='Veuillez vérifier la saisie de votre promotion'
+            erreur['value']=id
+            erreur['discount']=newprice
+            return Response(erreur,status=404)
+
+    def get(self,request,id,newprice,price):
+        prodBDDiscount = self.get_object(id,newprice)
+        if 0 < newprice <= 90:
+            prodBDDiscount.discount = round(price*(newprice/100),2)
+            print(prodBDDiscount.discount,"DISCOUNT")
+            prodBDDiscount.sale = True
+            prodBDDiscount.save()
+            response = {}
+            response['message']='Produit mis à jour'
+            response['id']=id
+            return Response(response,status=200)
+        elif (newprice == 0 or newprice == 0.0):
+            prodBDDiscount.sale = False
+            prodBDDiscount.discount = 0.0
+            prodBDDiscount.save()
+            response = {}
+            response['message']='Produit mis à jour'
+            response['id']=id
+            return Response(response,status=200)
+        else: 
+            erreur={}
+            erreur['message']='Veuillez vérifier la saisie de votre promotion'
+            erreur['id']=id
+            erreur['discount']=newprice
+            return Response(erreur,status=404)
+    
+                
+           
+            
+
+
+

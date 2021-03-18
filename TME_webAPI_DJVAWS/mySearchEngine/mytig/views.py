@@ -1,14 +1,40 @@
 import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from myRevendeurApp.models import QuantityInStock
+from myRevendeurApp.serializers import QuantityInStockSerializer
+from myManageSale.serializers import ProductSaleSerializer
+from myManageSale.models import ProductSale
 from mytig.config import baseUrl
 
 # Create your views here.
 class RedirectionListeDeProduits(APIView):
+    def get_object_QuantityInStock(self, id):
+        try:
+            return QuantityInStock.objects.get(tigId=id)
+        except QuantityInStock.DoesNotExist:
+            raise Http404
+    
+    def get_object_Discount(self, id):
+        try:
+            return ProductSale.objects.get(tigId=id)
+        except ProductSale.DoesNotExist:
+            raise Http404
+
     def get(self, request, format=None):
         response = requests.get(baseUrl+'products/')
         jsondata = response.json()
-        return Response(jsondata)
+        new_json = []
+        for prod in jsondata:
+            prodBDQuantity = self.get_object_QuantityInStock(prod['id'])
+            prodBDDiscount = self.get_object_Discount(prod['id'])
+            serializer = QuantityInStockSerializer(prodBDQuantity)
+            serializer_discount = ProductSaleSerializer(prodBDDiscount)
+            prod['quantity'] = serializer.data['quantity']
+            prod['discount'] = serializer_discount.data['discount']
+            prod['sale'] = serializer_discount.data['sale']
+            new_json.append(prod)
+        return Response(new_json)
 #    def post(self, request, format=None):
 #        NO DEFITION of post --> server will return "405 NOT ALLOWED"
 

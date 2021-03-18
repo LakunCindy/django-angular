@@ -6,6 +6,7 @@ from myRevendeurApp.models import QuantityInStock
 from myManageSale.models import ProductSale
 from myManageSale.serializers import ProductSaleSerializer
 from myRevendeurApp.serializers import QuantityInStockSerializer
+from django.views.decorators.http import require_http_methods
 from django.http import Http404
 import json
 
@@ -94,11 +95,11 @@ class IncrementStock(APIView):
             response_after_update_sale['quantity'] = serializer.data['quantity']
             return Response(response_after_update_sale)
         else:
-            return Response('id not found',status=404)
+            return Response("Le produit n'existe pas",status=404)
 
 ##Incrémente la quantité du produit et met à jour le sale et le discount en fonction du produit
 class DecrementStock(APIView):
-    #récupération de la nouvelle quantité e
+    #récupération de la nouvelle quantité 
     def new_quantity(self, id, number):
         prod = QuantityInStock.objects.get(tigId=id)
         old_quantity = prod.quantity
@@ -127,10 +128,89 @@ class DecrementStock(APIView):
                 new_response['quantity'] = serializer.data['quantity']
                 return Response(new_response)
             else:
-                return Response('cannot decrement, plese verify quantity',status=405)
+                return Response('La saisie de votre quantité est incorrecte',status=405)
         else:
-            return Response('id not found',status=404)
+            return Response("Le produit n'existe pas" ,status=404)
+
+#Met à jour la quantité ou la promotion
+class UpdateStock(APIView):
+    def get_object_QuantityInStock(self, id):
+        try:
+            return QuantityInStock.objects.get(tigId=id)
+        except QuantityInStock.DoesNotExist:
+            return Response('Produit introuvable',status=404)
+
+    def get_object_ProductSale(self,id):
+        try:
+            return ProductSale.objects.get(tigId=id)
+        except ProductSale.DoesNotExist:
+            return Response('Produit introuvable',status=404)
+
+    def update_quantity_discount(prodBDDiscount,prodBDQuantity,stock,response):
+        if stock['quantity'] >= 0:
+            prodBDQuantity.update(quantity=stock['quantity'])
+        else:
+            return False, stock
+        if 0 < stock['discount'] <= 90:
+            new_price = round((response['price']*(stock['discount']/100)),2)
+            prodBDDiscount.update(discount=new_price,sale=True)
+        elif stock['discount'] == 0 or stock['discount'] == 0.0:
+            prodBDDiscount.update(discount=0.0, sale=False)
+        else:
+            return False, stock
+
+
+    @require_http_methods(["PUT"])
+    def put(self, request, newStock):
+        for stock in newStock:
+            prodBDQuantity = self.get_object_QuantityInStock(stock.id)
+            prodBDDiscount = self.get_object_ProductSale(stock.id)
+            if prodBDDiscount and prodBDQuantity:
+                response = (requests.get(baseUrl+'product/'+str(stock['id'])+'/')).json()
+                isUpdate = self.update_quantity_discount(prodBDDiscount,prodBDQuantity,stock,response)
+                if not isUpdate:
+                    erreur={}
+                    erreur['message'] = 'La promotion ou la quantité saisie est incorrecte, veuillez vérifier le produit'
+                    erreur['value'] = isUpdate[1]
+                    return Response(erreur,status=404)
+        
+        return Response('Les données ont été correctement mises à jour')
+
+
+
+class UpdateQuantity(APIView):
+    def get_object_QuantityInStock(self, id,new_quantity):
+        try:
+            return QuantityInStock.objects.get(tigId=id)
+        except QuantityInStock.DoesNotExist:
+            erreur={}
+            erreur['message']='Veuillez vérifier la quantité du produit'
+            erreur['id']=id
+            erreur['quantity']=new_quantity
+            return Response('Produit introuvable',status=404)
+
+    def get(self,request,id,new_quantity):
+        prodBDQuantity = self.get_object_QuantityInStock(id,new_quantity)
+        if prodBDQuantity and new_quantity >= 0:
+            prodBDQuantity.quantity = new_quantity
+            prodBDQuantity.save()
+            response = {}
+            response['message']='Produit mis à jour'
+            response['id']=id
+            return Response(response,status=200)
+        else:
+            erreur={}
+            erreur['message']='Veuillez vérifier la quantité du produit'
+            erreur['id']=id
+            erreur['quantity']=new_quantity
+            return Response(erreur,status=404)
+
+                
+
 
 
         
+
+
+
         
