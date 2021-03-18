@@ -25,7 +25,9 @@ urlpatterns = [
     path('', include('myImageBank.urls')),
     path('', include('myRevendeurApp.urls')),
     path('', include('myManageSale.urls')),
-    path('', include('JsonWebToken.urls'))
+    path('', include('JsonWebToken.urls')),
+    path('', include('myCost.urls')),
+    path('', include('myGain.urls'))
 #...end of TME10...#
 ####################
 ]
