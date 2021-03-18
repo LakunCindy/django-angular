@@ -44,7 +44,9 @@ INSTALLED_APPS = [
 #...TME10 starts...#
     'myImageBank.apps.MyimagebankConfig',
     'myRevendeurApp.apps.MyrevendeurappConfig',
-    'myManageSale.apps.MymanagesaleConfig'
+    'myManageSale.apps.MymanagesaleConfig',
+    'myCost.apps.MycostConfig',
+    'myGain.apps.MygainConfig'
 #...end of TME10...#
 ####################
 ]
