@@ -19,6 +19,12 @@
          </li>
          <li>
             Pourcentage de promotion : {{product.discount}}
+            <button (click)="afficherUpdatePromo=true">Modifier promotion</button>
+            <button (click)="afficherUpdatePromo=true">Retirer promotion</button>
+            <div *ngIf="afficherUpdatePromo == true">
+               <input class="form-control"/>
+               <button>Valider</button> 
+            </div>  
          </li>                    
         <li>
             Quantité stock : {{product.quantity_stock}} 
@@ -28,7 +34,7 @@
                required
                [(ngModel)]="quantityChange" />
                 <button (click)="addStock(quantityChange, product)">Ajouter</button>
-                <button> Enlever</button>
+                <button (click)="deleteStock(quantityChange, product)"> Enlever</button>
             </div>
          </li>        
         <li>

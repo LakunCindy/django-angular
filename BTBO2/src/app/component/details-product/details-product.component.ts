@@ -14,7 +14,8 @@ export class DetailsProductComponent implements OnInit {
   product;
   productList;
   afficherUpdateStock;
-  quantityChange = 0;
+  quantityChange:number = 0;
+  afficherUpdatePromo;
   
   constructor(public productsService : ProductsService, private http: HttpClient) {
   }
@@ -34,6 +35,7 @@ export class DetailsProductComponent implements OnInit {
     for(let p of this.products){
       if(p.id == id){
         this.afficherUpdateStock = false;
+        this.afficherUpdatePromo = false;
         this.product = p; 
       }   
     }
@@ -41,16 +43,36 @@ export class DetailsProductComponent implements OnInit {
 
   getProducts(){
     for(let p of this.products){
-        this.productList = p;         
+        this.productList = p;     
+        this.quantityChange = p.quantity_stock    
     }
   }
 
   addStock(quantityChange, product){
-    this.productsService.incrementProduct(product.id,quantityChange).subscribe(res => {
-      console.log(res);
-    },
-    (err) => {
-      alert('failed loading json data');
-    });
+    if(parseFloat(quantityChange))
+    {
+      this.productsService.incrementProduct(product.id,quantityChange).subscribe(res => {
+        console.log(res);
+      },
+      (err) => {
+        alert(err.error);
+      });
+    }else{
+      alert("Veuillez vérifier la saisie de votre quantité.");
+    }
+  }
+
+  deleteStock(quantityChange, product){
+    if(parseFloat(quantityChange))
+    {
+      this.productsService.decrementProduct(product.id,quantityChange).subscribe(res => {
+        console.log(res);
+      },
+      (err) => {
+        alert(err.error);
+      });
+    }else{
+      alert("Veuillez vérifier la saisie de votre quantité.");
+    }
   }
 }

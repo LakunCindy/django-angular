@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './component/header/header.component';
 import { TableProductComponent } from './component/table-product/table-product.component';
+import { LoginComponent } from './component/login/login.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { TableProductComponent } from './component/table-product/table-product.c
     DetailsProductComponent,
     HomeComponent,
     HeaderComponent,
-    TableProductComponent
+    TableProductComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
