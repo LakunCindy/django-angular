@@ -1,10 +1,10 @@
-<div id="infosProduct">
+<div id="infosProduct" *ngIf="products">
     <h1>Page d'affichage du produit</h1>
-    <select ng-model="productList" (change)='getProductId($event.target.value)'>
-        <option *ngFor="let productList of products" value="{{productList.id}}" >{{productList.name}}</option>
+    <select #productList [ngModel]="productList.value" (change)='getProductId(productList.value)'>
+        <option *ngFor="let product of products" [value]="product.id" >{{product.name}}</option>
     </select> 
 
-    <ul *ngIf="productList">
+    <ul *ngIf="product">
         <li>
            Id : {{product.id}}
         </li>
@@ -27,7 +27,7 @@
             </div>  
          </li>                    
         <li>
-            Quantité stock : {{product.quantity_stock}} 
+            Quantité stock : {{product.quantity}} 
             <button (click)="afficherUpdateStock=true">Modifier Quantité</button>
             <div *ngIf="afficherUpdateStock == true">
                <input type="text" class="form-control" id="name" 

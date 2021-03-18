@@ -35,7 +35,7 @@ export class ProductsService {
    * @returns 
    */
   infoStockProduct(id: number): Observable<EntityResponseType> {
-    return this.http.get<Product>(`${this.resourceUrlApi}/infoproduct/${id}`, { observe: 'response' })
+    return this.http.get<Product>(`${this.resourceUrlApi}/product/${id}`, { observe: 'response' })
   }
 
   /**

@@ -23,30 +23,36 @@ export class DetailsProductComponent implements OnInit {
   ngOnInit() {
     this.productsService.getData().subscribe(res => {
         this.products = res.body;
-        this.getProducts();
-        this.getProductId(6);
+        //this.getProducts();
+        this.getProductId(12);
+        this.productList = this.products[0]
       },
       (err) => {
         alert('failed loading json data');
       });
   }
 
-  getProductId(id){
-    for(let p of this.products){
-      if(p.id == id){
+  getProductId(id:number){
+    if(id)
+    {
+      this.productsService.infoStockProduct(id).subscribe(res => {
+        this.product = res.body;
         this.afficherUpdateStock = false;
         this.afficherUpdatePromo = false;
-        this.product = p; 
-      }   
+      },
+      (err) => {
+        alert(err.error);
+      });
     }
+
   }
 
-  getProducts(){
-    for(let p of this.products){
-        this.productList = p;     
-        this.quantityChange = p.quantity_stock    
-    }
-  }
+  // getProducts(){
+  //   for(let p of this.products){
+  //       this.productList = p;     
+  //       this.quantityChange = p.quantity   
+  //   }
+  // }
 
   addStock(quantityChange, product){
     if(parseFloat(quantityChange))
