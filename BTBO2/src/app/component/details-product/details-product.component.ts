@@ -15,6 +15,8 @@ export class DetailsProductComponent implements OnInit {
   productList;
   afficherUpdateStock;
   quantityChange:number = 0;
+  promotionChange:number = 0;
+  price;
   afficherUpdatePromo;
   
   constructor(public productsService : ProductsService, private http: HttpClient) {
@@ -23,7 +25,6 @@ export class DetailsProductComponent implements OnInit {
   ngOnInit() {
     this.productsService.getData().subscribe(res => {
         this.products = res.body;
-        //this.getProducts();
         this.getProductId(12);
         this.productList = this.products[0]
       },
@@ -39,6 +40,7 @@ export class DetailsProductComponent implements OnInit {
         this.product = res.body;
         this.afficherUpdateStock = false;
         this.afficherUpdatePromo = false;
+        this.quantityChange = res.body.quantity;
       },
       (err) => {
         alert(err.error);
@@ -47,18 +49,13 @@ export class DetailsProductComponent implements OnInit {
 
   }
 
-  // getProducts(){
-  //   for(let p of this.products){
-  //       this.productList = p;     
-  //       this.quantityChange = p.quantity   
-  //   }
-  // }
-
-  addStock(quantityChange, product){
+  updateStock(quantityChange, product){
     if(parseFloat(quantityChange))
     {
-      this.productsService.incrementProduct(product.id,quantityChange).subscribe(res => {
+      this.productsService.updateQuantity(product.id,quantityChange).subscribe(res => {
         console.log(res);
+        this.getProductId(product.id);
+        alert("Votre modification de stock a bien été effectué.")
       },
       (err) => {
         alert(err.error);
@@ -68,11 +65,12 @@ export class DetailsProductComponent implements OnInit {
     }
   }
 
-  deleteStock(quantityChange, product){
-    if(parseFloat(quantityChange))
-    {
-      this.productsService.decrementProduct(product.id,quantityChange).subscribe(res => {
+  updateSale(promotionChange, product, price){
+    if(parseFloat(promotionChange)){
+      this.productsService.updateSale(product.id,promotionChange, price).subscribe(res => {
         console.log(res);
+        this.getProductId(product.id);
+        alert("Votre modification de Promotion a bien été effectué.")
       },
       (err) => {
         alert(err.error);
@@ -80,5 +78,6 @@ export class DetailsProductComponent implements OnInit {
     }else{
       alert("Veuillez vérifier la saisie de votre quantité.");
     }
+    
   }
 }
