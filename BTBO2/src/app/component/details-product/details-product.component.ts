@@ -50,7 +50,7 @@ export class DetailsProductComponent implements OnInit {
   }
 
   updateStock(quantityChange, product){
-    if(parseFloat(quantityChange))
+    if(parseInt(quantityChange))
     {
       this.productsService.updateQuantity(product.id,quantityChange).subscribe(res => {
         console.log(res);
@@ -61,12 +61,12 @@ export class DetailsProductComponent implements OnInit {
         alert(err.error);
       });
     }else{
-      alert("Veuillez vérifier la saisie de votre quantité.");
+      alert("Veuillez vérifier la saisie de votre promotion.");
     }
   }
 
   updateSale(promotionChange, product, price){
-    if(parseFloat(promotionChange)){
+    if(parseFloat(promotionChange) || (promotionChange == 0)){
       this.productsService.updateSale(product.id,promotionChange, price).subscribe(res => {
         console.log(res);
         this.getProductId(product.id);

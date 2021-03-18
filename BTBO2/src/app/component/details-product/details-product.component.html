@@ -15,7 +15,9 @@
            Prix : {{product.price}}
         </li>
         <li>
-            Prix en promotion : {{product.discount}}
+            <ng-container *ngIf="product.sale == true">
+               Prix en promotion : {{product.discount}}
+            </ng-container>
             <button (click)="afficherUpdatePromo=true">Modifier promotion</button>
             <button (click)="updateSale(0, product, product.price)">Retirer promotion</button>
             <div *ngIf="afficherUpdatePromo == true">
@@ -27,9 +29,7 @@
             Quantité stock : {{product.quantity}} 
             <button (click)="afficherUpdateStock=true">Modifier Quantité</button>
             <div *ngIf="afficherUpdateStock == true">
-               <input type="text" class="form-control" id="name" 
-               required
-               [(ngModel)]="quantityChange" />
+               <input type="text" class="form-control" required[(ngModel)]="quantityChange" />
                 <button (click)="updateStock(quantityChange, product)">Valider</button>
             </div>
          </li>        
