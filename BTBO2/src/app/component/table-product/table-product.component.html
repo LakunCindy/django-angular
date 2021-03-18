@@ -1,6 +1,7 @@
 <div class="border-black" style="text-align: center;">   
     <p class="text-3xl text-purple-700 text-opacity-50">Poissons</p>
-    <table class="table-auto border-separate border border-green-800" style="margin:auto; text-align:left; width:80%;">
+    <table id="products" class="table-auto border-separate border border-green-800" style="margin:auto; text-align:left; width:80%; table-layout:fixed">
+        <col style="width:10%" span="4" />
         <tr>
             <th>Nom</th>
             <th>Prix</th>
@@ -19,8 +20,8 @@
                 <td>{{productList.quantity_stock}}</td>
                 <td>{{productList.quantity_sold}}</td>
                 <td>{{productList.comments}}</td>
-                <td><input/></td>
-                <td><input/></td>  
+                <td style="text-align: center;"><input/></td>
+                <td style="text-align: center;"><input/></td>  
             </ng-container>          
         </tr>        
     </table>    
@@ -28,7 +29,8 @@
 
 <div class="border-black" style="text-align: center;">
     <p class="text-3xl text-purple-700 text-opacity-50">Fruits de mer</p>
-    <table class="table-auto border-separate border border-green-800" style="margin:auto; text-align:left; width:80%;">
+    <table id="products" class="table-auto border-separate border border-green-800" style="margin:auto; text-align:left; width:80%; table-layout:fixed">
+        <col style="width:10%" span="4" />
         <tr>
             <th>Nom</th>
             <th>Prix</th>
@@ -47,8 +49,8 @@
                 <td>{{productList.quantity_stock}}</td>
                 <td>{{productList.quantity_sold}}</td>
                 <td>{{productList.comments}}</td>
-                <td><input/></td>
-                <td><input/></td> 
+                <td style="text-align: center;"><input/></td>
+                <td style="text-align: center;"><input/></td> 
             </ng-container>           
         </tr>   
     </table>
@@ -56,7 +58,8 @@
 
 <div class="border-black" style="text-align: center;">
     <p class="text-3xl text-purple-700 text-opacity-50">Crustacés</p>
-    <table class="table-auto border-separate border border-green-800" style="margin:auto; text-align:left; width:80%;">
+    <table id="products" class="table-auto border-separate border border-green-800" style="margin:auto; text-align:left; width:80%; table-layout:fixed">
+        <col style="width:10%" span="4" />
         <tr>
             <th>Nom</th>
             <th>Prix</th>
@@ -75,8 +78,8 @@
                 <td>{{productList.quantity_stock}}</td>
                 <td>{{productList.quantity_sold}}</td>
                 <td>{{productList.comments}}</td>
-                <td><input/></td>
-                <td><input/></td>
+                <td style="text-align: center;"><input/></td>
+                <td style="text-align: center;"><input/></td>
             </ng-container>            
         </tr>      
     </table>
