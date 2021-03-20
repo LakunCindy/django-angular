@@ -2,6 +2,8 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from myGain.models import Gain
 from myGain.serializers import GainSerializer
+from myCost.models import Cost
+from myCost.serializers import CostSerializer
 from django.http import Http404
 import json
 import requests
@@ -92,6 +94,43 @@ class TheMostSale(APIView):
             erreur = {}
             erreur['message'] = 'Aucunes données trouvées'
             return Response(erreur,status=404)
+
+class Impot(APIView):
+
+    def getTotalGain(self):
+        gains = Gain.objects.all()
+        totalGain = 0
+        for gain in gains:
+            totalGain += gain.totalPrice
+        return totalGain
+    
+    def getTotalCost(self):
+        costs = Cost.objects.all()
+        totalCost = 0
+        for cost in costs:
+            totalCost += cost.totalPrice
+        return totalCost
+
+    def get(self,request):
+        totalCost = self.getTotalCost()
+        totalGain = self.getTotalGain()
+        total = totalGain - totalCost
+        impot = 0
+
+        if total > 0:
+            impot = round(total * 0.3,2)
+            response = {}
+            response['message']= "L'impot est de :"
+            response['impot']= impot
+            response['gain'] = totalGain
+            response['cost'] = totalCost
+            return Response(response,status=200) 
+        else:
+            response = {}
+            response['message']= "Aucun impot a payé cette année !"
+            return Response(response,status=200)
+
+
 
 
 
