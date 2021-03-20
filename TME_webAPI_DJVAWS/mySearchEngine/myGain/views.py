@@ -28,9 +28,12 @@ class AddGain():
         # if prod.created.date() == today.strftime("%Y-%m-%d"):
         if quantity >= 0 and totalPrice >= 0:
             prod.quantity = prod.quantity + quantity 
-            prod.totalPrice = prod.totalPrice + totalPrice
             print(prod.totalPrice,'total')
             prod.isSale = isSale
+            if isSale == 1:
+                prod.totalPrice = prod.totalPrice + totalPrice
+            else:
+                prod.totalPrice = prod.totalPrice + 0
             prod.save()
             response = {}
             response['message'] = 'Cout ajouté'
@@ -66,4 +69,6 @@ class TotalGainPerYear(APIView):
             erreur = {}
             erreur['message'] = 'Aucunes données trouvées'
             return Response(erreur,status=404)
+
+
 
