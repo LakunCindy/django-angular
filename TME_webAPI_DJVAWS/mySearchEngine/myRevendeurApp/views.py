@@ -6,6 +6,7 @@ from myRevendeurApp.models import QuantityInStock
 from myManageSale.models import ProductSale
 from myManageSale.serializers import ProductSaleSerializer
 from myRevendeurApp.serializers import QuantityInStockSerializer
+from myCost.views import AddCost
 from django.views.decorators.http import require_http_methods
 from django.http import Http404
 import json
@@ -81,19 +82,25 @@ class IncrementStock(APIView):
             print('not exist')
             raise Http404
 
-    def get(self,request,id,number,format=None):
+    def get(self,request,id,number,totalPrice,format=None):
         prod = self.get_object(id)
         if prod:
             response = requests.get(baseUrl+'product/'+str(id)+'/')
             json_response = response.json()
             self.increment_quantity(id,number)
-            #récupère le produit de la table myRevendeurApp_quantityInStock avec la quantité à jour pour
-            #update le sale et le discount du produit
+            #récupère le produit de la table myRevendeurApp_quantityInStock avec la quantité à jour 
             new_prod = self.get_object(id)
-            response_after_update_sale = UpdateSale.update(self,new_prod,json_response,id)
-            serializer = QuantityInStockSerializer(new_prod)
-            response_after_update_sale['quantity'] = serializer.data['quantity']
-            return Response(response_after_update_sale)
+            costIsAdd = AddCost.add(id,new_prod.quantity,totalPrice)
+            if costIsAdd:
+                response = {}
+                response['message']='Produit mis à jour'
+                response['id']=id
+                return Response(response,status=200)
+            else:
+                erreur = {}
+                erreur['message'] = 'Veuillez vérifier les valeurs saisies'
+                erreur['id'] = id
+                return Response(response,status=404)
         else:
             return Response("Le produit n'existe pas",status=404)
 
@@ -189,11 +196,14 @@ class UpdateQuantity(APIView):
             erreur['quantity']=new_quantity
             return Response('Produit introuvable',status=404)
 
-    def get(self,request,id,new_quantity):
+    def get(self,request,id,new_quantity,totalPrice):
         prodBDQuantity = self.get_object_QuantityInStock(id,new_quantity)
+        old_quantity = prodBDQuantity.quantity
         if prodBDQuantity and new_quantity >= 0:
             prodBDQuantity.quantity = new_quantity
             prodBDQuantity.save()
+            if new_quantity > old_quantity:
+                AddCost.update(self,id,new_quantity,totalPrice)
             response = {}
             response['message']='Produit mis à jour'
             response['id']=id

@@ -3,5 +3,5 @@ from myCost import views
 from django.views.generic.base import RedirectView
 
 urlpatterns = [
-    path('addCost/', views.addCost.as_view()),
+    path('totalCostPerYear/<int:year>/', views.TotalCostPerYear.as_view())
 ]
