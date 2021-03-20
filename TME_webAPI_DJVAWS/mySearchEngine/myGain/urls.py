@@ -3,5 +3,5 @@ from myGain import views
 from django.views.generic.base import RedirectView
 
 urlpatterns = [
-    path('addGain/', views.addGain.as_view()),
+    path('totalGainPerYear/<int:year>/', views.TotalGainPerYear.as_view())
 ]

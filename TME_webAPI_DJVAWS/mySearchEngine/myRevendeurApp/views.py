@@ -7,6 +7,7 @@ from myManageSale.models import ProductSale
 from myManageSale.serializers import ProductSaleSerializer
 from myRevendeurApp.serializers import QuantityInStockSerializer
 from myCost.views import AddCost
+from myGain.views import AddGain
 from django.views.decorators.http import require_http_methods
 from django.http import Http404
 import json
@@ -90,7 +91,7 @@ class IncrementStock(APIView):
             self.increment_quantity(id,number)
             #récupère le produit de la table myRevendeurApp_quantityInStock avec la quantité à jour 
             new_prod = self.get_object(id)
-            costIsAdd = AddCost.add(id,new_prod.quantity,totalPrice)
+            costIsAdd = AddCost.add(id,number,totalPrice)
             if costIsAdd:
                 response = {}
                 response['message']='Produit mis à jour'
@@ -119,21 +120,26 @@ class DecrementStock(APIView):
         except QuantityInStock.DoesNotExist:
             return Response('id not found',status=404)
     
-    def get(self,request,id,number,format=None):
+    def get(self,request,id,number,totalPrice,isSale,format=None):
         prod_in_quantity_in_stock = self.get_object(id)
         if prod_in_quantity_in_stock:
             new_quantity = self.new_quantity(id,number)
             if new_quantity >= 0:
                 response = requests.get(baseUrl+'product/'+str(id)+'/')
                 prod_in_database = response.json()
-                QuantityInStock.objects.filter(tigId=id).update(quantity = new_quantity)
+                QuantityInStock.objects.update(quantity = new_quantity)
                 #récupère le produit de la table myRevendeurApp_quantityInStock avec la quantité à jour pour
-                #update le sale et le discount du produit
-                new_prod = self.get_object(id)
-                new_response = UpdateSale.update(self,new_prod,prod_in_database,id)
-                serializer = QuantityInStockSerializer(new_prod)
-                new_response['quantity'] = serializer.data['quantity']
-                return Response(new_response)
+                gainIsAdd = AddGain.add(id,number,totalPrice,isSale)
+                if gainIsAdd:
+                    response = {}
+                    response['message']='Produit mis à jour'
+                    response['id']=id
+                    return Response(response,status=200)
+                else:
+                    erreur = {}
+                    erreur['message'] = 'Veuillez vérifier les valeurs saisies'
+                    erreur['id'] = id
+                    return Response(response,status=404) 
             else:
                 return Response('La saisie de votre quantité est incorrecte',status=405)
         else:

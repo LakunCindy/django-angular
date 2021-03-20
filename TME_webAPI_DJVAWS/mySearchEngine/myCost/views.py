@@ -9,8 +9,6 @@ from datetime import *
 from rest_framework.response import Response
 
 # Create your views here.
-
-
 class Utilities():
     def get_object(id):
         try:
@@ -26,7 +24,7 @@ class AddCost():
         prod = Utilities.get_object(id)
         # if prod.created.date() == today.strftime("%Y-%m-%d"):
         if quantity >= 0 and totalPrice >= 0:
-            prod.quantity = quantity
+            prod.quantity = prod.quantity + quantity
             prod.totalPrice = prod.totalPrice + totalPrice
             prod.save()
             response = {}
