@@ -71,4 +71,29 @@ class TotalGainPerYear(APIView):
             return Response(erreur,status=404)
 
 
+class TheMostSale(APIView):
+
+    def get(self,request):
+        prods = Gain.objects.all()
+        maxQuantity = 0
+        mostSaleId = 0
+        if prods:
+            for prod in prods:
+                if prod.quantity > maxQuantity:
+                    maxQuantity = prod.quantity
+                    mostSaleId = prod.tigId
+
+            response = {}
+            response['message']= 'Le plus vendu :'
+            response['mostSale']= maxQuantity
+            response['id'] = mostSaleId
+            return Response(response,status=200)
+        else:
+            erreur = {}
+            erreur['message'] = 'Aucunes données trouvées'
+            return Response(erreur,status=404)
+
+
+
+
 
