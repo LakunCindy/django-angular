@@ -18,6 +18,7 @@ export class DetailsProductComponent implements OnInit {
   promotionChange:number = 0;
   price;
   afficherUpdatePromo;
+  afficherPrixAjout;
   
   constructor(public productsService : ProductsService, private http: HttpClient) {
   }
@@ -41,25 +42,38 @@ export class DetailsProductComponent implements OnInit {
         this.afficherUpdateStock = false;
         this.afficherUpdatePromo = false;
         this.quantityChange = res.body.quantity;
+        this.afficherPrixAjout = false;
       },
       (err) => {
         alert(err.error);
       });
     }
+  }
 
+  getOperation(event: any){
+    if(event.target.value == "Ajouter"){
+      console.log(event.target.value);
+      this.afficherPrixAjout = true;
+    }
+    else{
+      this.afficherPrixAjout = false;
+    }
   }
 
   updateStock(quantityChange, product){
     if(parseInt(quantityChange))
     {
-      this.productsService.updateQuantity(product.id,quantityChange).subscribe(res => {
-        console.log(res);
-        this.getProductId(product.id);
-        alert("Votre modification de stock a bien été effectué.")
-      },
-      (err) => {
-        alert(err.error);
-      });
+      if(this.afficherPrixAjout == false)
+      {
+        this.productsService.decrementProduct(product.id,quantityChange).subscribe(res => {
+          console.log(res);
+          this.getProductId(product.id);
+          alert("Votre modification de stock a bien été effectué.")
+        },
+        (err) => {
+          alert(err.error);
+        });
+      }
     }else{
       alert("Veuillez vérifier la saisie de votre promotion.");
     }
