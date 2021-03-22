@@ -120,17 +120,17 @@ class DecrementStock(APIView):
         except QuantityInStock.DoesNotExist:
             return Response('id not found',status=404)
     
-      def get(self,request,id,number,totalPrice,format=None):
+    def get(self,request,id,number,totalPrice,format=None):
         prod_in_quantity_in_stock = self.get_object(id)
         if prod_in_quantity_in_stock:
             new_quantity = self.new_quantity(id,number)
             if new_quantity >= 0:
                 response = requests.get(baseUrl+'product/'+str(id)+'/')
                 prod_in_database = response.json()
-                QuantityInStock.objects.update(quantity = new_quantity)
+                QuantityInStock.objects.filter(tigId=id).update(quantity = new_quantity)
                 #récupère le produit de la table myRevendeurApp_quantityInStock avec la quantité à jour pour
                 gainIsAdd = AddGain.add(id,number,totalPrice)
-                if gainIsAdd:
+                if gainIsAdd is True:
                     response = {}
                     response['message']='Produit mis à jour'
                     response['id']=id
@@ -141,7 +141,10 @@ class DecrementStock(APIView):
                     erreur['id'] = id
                     return Response(response,status=404) 
             else:
-                return Response('La saisie de votre quantité est incorrecte',status=405)
+                response = {}
+                response['message']='La saisie de votre quantité est incorrecte'
+                response['quantityProduct']=new_quantity
+                return Response(response,status=405)
         else:
             return Response("Le produit n'existe pas" ,status=404)
 

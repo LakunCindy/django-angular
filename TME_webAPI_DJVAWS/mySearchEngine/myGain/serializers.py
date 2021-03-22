@@ -5,4 +5,4 @@ class GainSerializer(ModelSerializer):
 
     class Meta:
         model = Gain
-        fields = ('id','tigId','quantity','totalPrice','isSale')
+        fields = ('created','id','tigId','quantity','totalPrice','isSale')
