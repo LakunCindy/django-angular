@@ -72,7 +72,7 @@ class UpdateSale(APIView):
     def get(self,request,id,newprice,price):
         prodBDDiscount = self.get_object(id,newprice)
         if 0 < newprice <= 90:
-            prodBDDiscount.discount = round(price*(newprice/100),2)
+            prodBDDiscount.discount = round(price - (price*(newprice/100)),2)
             print(prodBDDiscount.discount,"DISCOUNT")
             prodBDDiscount.sale = True
             prodBDDiscount.save()

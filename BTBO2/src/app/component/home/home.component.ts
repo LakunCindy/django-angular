@@ -17,4 +17,8 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/detailsProduct'])
   }
 
+  goToAllProducts(){
+    this.router.navigate(['/tableProduct'])
+  }
+
 }
