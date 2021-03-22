@@ -29,8 +29,18 @@
             Quantité stock : {{product.quantity}} 
             <button (click)="afficherUpdateStock=true">Modifier Quantité</button>
             <div *ngIf="afficherUpdateStock == true">
-               <input type="text" class="form-control" required[(ngModel)]="quantityChange" />
-                <button (click)="updateStock(quantityChange, product)">Valider</button>
+               <input type="text" required [(ngModel)]="quantityChange" />
+
+               <select (change)='getOperation($event.target.value)'>
+                  <option value="Vendu">Vendu</option>
+                  <option value="Perimer">Perimer</option>
+                  <option value="Ajouter">Ajouter</option>
+               </select>
+
+               <ng-container *ngIf="afficherPrixAjout">
+                  <input type="text" required [(ngModel)]="prixAjout" placeholder="Prix de l'ajout" />
+               </ng-container>
+               <button (click)="updateStock(quantityChange, product, product.price, product.discount)">Valider</button>
             </div>
          </li>        
         <li>

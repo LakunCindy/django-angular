@@ -6,6 +6,7 @@ from myRevendeurApp.serializers import QuantityInStockSerializer
 from myManageSale.serializers import ProductSaleSerializer
 from myManageSale.models import ProductSale
 from mytig.config import baseUrl
+from myGain.views import NumberArticleSale
 
 # Create your views here.
 class RedirectionListeDeProduits(APIView):
@@ -33,6 +34,7 @@ class RedirectionListeDeProduits(APIView):
             prod['quantity'] = serializer.data['quantity']
             prod['discount'] = serializer_discount.data['discount']
             prod['sale'] = serializer_discount.data['sale']
+            prod['quantitySold'] = NumberArticleSale.get(pk)
             new_json.append(prod)
         return Response(new_json)
 #    def post(self, request, format=None):
@@ -66,7 +68,8 @@ class RedirectionDetailProduit(APIView):
         serializer_discount = ProductSaleSerializer(prodBDDiscount)
         prod['quantity'] = serializer.data['quantity']
         prod['discount'] = serializer_discount.data['discount']
-        prod['sale'] = serializer_discount.data['sale']		
+        prod['sale'] = serializer_discount.data['sale']	
+        prod['quantitySold'] = NumberArticleSale.get(pk)
         return Response(prod)
 #    def put(self, request, pk, format=None):
 #        NO DEFITION of put --> server will return "405 NOT ALLOWED"

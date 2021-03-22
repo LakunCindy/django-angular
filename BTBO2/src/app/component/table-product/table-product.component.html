@@ -6,25 +6,42 @@
             <tr>
                 <th>Nom</th>
                 <th>Prix</th>
+                <th>Prix en promotion</th>
                 <th>Promotion</th>
                 <th>Quantité</th>
                 <th>Vendus</th>
                 <th>Commentaire</th>
-                <th>Ajout Stock</th>
-                <th>Ajout Promo</th>
+                <th>&nbsp;</th>
             </tr>
-            <tr *ngFor="let productList of products">
-                <ng-container *ngIf="productList.category == 0">
-                    <td>{{productList.name}}</td>
-                    <td>{{productList.price}}</td>
-                    <td>{{productList.discount}}</td>
-                    <td>{{productList.quantity_stock}}</td>
-                    <td>{{productList.quantity_sold}}</td>
-                    <td>{{productList.comments}}</td>
-                    <td style="text-align: center;"><input/></td>
-                    <td style="text-align: center;"><input/></td>  
+            <tr *ngFor="let product of products">
+                <ng-container *ngIf="product.category == 0">
+                    <td>{{product.name}}</td>
+                    <td>{{product.price}}</td>
+                    <td>
+                        {{product.discount}}
+                        <ng-container *ngIf="product.sale == true">
+                            <button (click)="updateSale(0, product, product.price)">-</button>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <select id="select_pourcentage_{{product.id}}">
+                            <option *ngFor="let pourcentage of pourcentages" value="{{pourcentage}}">{{pourcentage}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        {{product.quantity}}
+                        <input id="input_quantity_{{product.id}}" style="width: 50px; border: 2px solid;"/>
+                        <select id="select_operation{{product.id}}" (change)='getOperation($event.target.value)'>
+                            <option value="Vendu">Vendu</option>
+                            <option value="Perimer">Perimer</option>
+                            <option value="Ajouter">Ajouter</option>
+                         </select>
+                    </td>
+                    <td>{{product.quantity_sold}}</td>
+                    <td>{{product.comments}}</td>  
+                    <td><button>Update</button></td>                
                 </ng-container>          
-            </tr>        
+            </tr>      
         </table>
     </div>    
 </div>
@@ -37,25 +54,42 @@
             <tr>
                 <th>Nom</th>
                 <th>Prix</th>
+                <th>Prix en promotion</th>
                 <th>Promotion</th>
                 <th>Quantité</th>
                 <th>Vendus</th>
                 <th>Commentaire</th>
-                <th>Ajout Stock</th>
-                <th>Ajout Promo</th>
+                <th>&nbsp;</th>
             </tr>
-            <tr *ngFor="let productList of products">
-                <ng-container *ngIf="productList.category == 1">
-                    <td>{{productList.name}}</td>
-                    <td>{{productList.price}}</td>
-                    <td>{{productList.discount}}</td>
-                    <td>{{productList.quantity_stock}}</td>
-                    <td>{{productList.quantity_sold}}</td>
-                    <td>{{productList.comments}}</td>
-                    <td style="text-align: center;"><input/></td>
-                    <td style="text-align: center;"><input/></td> 
-                </ng-container>           
-            </tr>   
+            <tr *ngFor="let product of products">
+                <ng-container *ngIf="product.category == 1">
+                    <td>{{product.name}}</td>
+                    <td>{{product.price}}</td>
+                    <td>
+                        {{product.discount}}
+                        <ng-container *ngIf="product.sale == true">
+                            <button (click)="updateSale(0, product, product.price)">-</button>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <select id="select_pourcentage_{{product.id}}">
+                            <option *ngFor="let pourcentage of pourcentages" value="{{pourcentage}}">{{pourcentage}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        {{product.quantity}}
+                        <input id="{{product.id}}" style="width: 50px; border: 2px solid;"/>
+                        <select id="select_operation{{product.id}}" (change)='getOperation($event.target.value)'>
+                            <option value="Vendu">Vendu</option>
+                            <option value="Perimer">Perimer</option>
+                            <option value="Ajouter">Ajouter</option>
+                         </select>
+                    </td>
+                    <td>{{product.quantity_sold}}</td>
+                    <td>{{product.comments}}</td>  
+                    <td><button>Update</button></td>
+                </ng-container>          
+            </tr>  
         </table>
     </div>
 </div>
@@ -68,25 +102,42 @@
             <tr>
                 <th>Nom</th>
                 <th>Prix</th>
+                <th>Prix en promotion</th>
                 <th>Promotion</th>
                 <th>Quantité</th>
                 <th>Vendus</th>
                 <th>Commentaire</th>
-                <th>Ajout Stock</th>
-                <th>Ajout Promo</th>
+                <th>&nbsp;</th>
             </tr>
-            <tr *ngFor="let productList of products">
-                <ng-container *ngIf="productList.category == 2">
-                    <td>{{productList.name}}</td>
-                    <td>{{productList.price}}</td>
-                    <td>{{productList.discount}}</td>
-                    <td>{{productList.quantity_stock}}</td>
-                    <td>{{productList.quantity_sold}}</td>
-                    <td>{{productList.comments}}</td>
-                    <td style="text-align: center;"><input/></td>
-                    <td style="text-align: center;"><input/></td>
-                </ng-container>            
-            </tr>      
+            <tr *ngFor="let product of products">
+                <ng-container *ngIf="product.category == 2">
+                    <td>{{product.name}}</td>
+                    <td>{{product.price}}</td>
+                    <td>
+                        {{product.discount}}
+                        <ng-container *ngIf="product.sale == true">
+                            <button (click)="updateSale(0, product, product.price)">-</button>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <select id="select_pourcentage_{{product.id}}">
+                            <option *ngFor="let pourcentage of pourcentages" value="{{pourcentage}}">{{pourcentage}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        {{product.quantity}}
+                        <input id="{{product.id}}" style="width: 50px; border: 2px solid;"/>
+                        <select id="select_operation{{product.id}}" (change)='getOperation($event.target.value)'>
+                            <option value="Vendu">Vendu</option>
+                            <option value="Perimer">Perimer</option>
+                            <option value="Ajouter">Ajouter</option>
+                         </select>
+                    </td>
+                    <td>{{product.quantity_sold}}</td>
+                    <td>{{product.comments}}</td>
+                    <td><button>Update</button></td>  
+                </ng-container>          
+            </tr>     
         </table>
     </div>
 </div>
