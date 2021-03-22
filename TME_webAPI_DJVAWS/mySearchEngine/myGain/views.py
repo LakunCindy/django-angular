@@ -23,19 +23,19 @@ class Utilities():
 #Met à jour la table des gains lors d'une decrementation de la quantité d'un produit
 
 class AddGain():
-    def add(id,quantity,totalPrice,isSale):
+    def add(id,quantity,totalPrice):
         print(totalPrice)
-        # today = date.today()
+    
         prod = Utilities.get_object(id)
-        # if prod.created.date() == today.strftime("%Y-%m-%d"):
         if quantity >= 0 and totalPrice >= 0:
             prod.quantity = prod.quantity + quantity 
             print(prod.totalPrice,'total')
-            prod.isSale = isSale
-            if isSale == 1:
-                prod.totalPrice = prod.totalPrice + totalPrice
-            else:
+            if totalPrice == 0:
                 prod.totalPrice = prod.totalPrice + 0
+                prod.isSale = 0
+            else:
+                prod.totalPrice = prod.totalPrice + totalPrice
+                prod.isSale = 1
             prod.save()
             response = {}
             response['message'] = 'Cout ajouté'
@@ -112,6 +112,7 @@ class Impot(APIView):
         return totalCost
 
     def get(self,request):
+        gains = Gain.objects.all()
         totalCost = self.getTotalCost()
         totalGain = self.getTotalGain()
         total = totalGain - totalCost
@@ -124,10 +125,11 @@ class Impot(APIView):
             response['impot']= impot
             response['gain'] = totalGain
             response['cost'] = totalCost
+            # response['time'] = datetime.now
             return Response(response,status=200) 
         else:
             response = {}
-            response['message']= "Aucun impot a payé cette année !"
+            response['message']= "Aucun impot à payer cette année !"
             return Response(response,status=200)
 
 

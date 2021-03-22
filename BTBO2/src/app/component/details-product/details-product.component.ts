@@ -18,7 +18,11 @@ export class DetailsProductComponent implements OnInit {
   promotionChange:number = 0;
   price;
   afficherUpdatePromo;
-  
+  operation;
+  afficherPrixAjout;
+  prixAjout:number = 0;
+  totalPrice:number = 0;
+
   constructor(public productsService : ProductsService, private http: HttpClient) {
   }
 
@@ -27,6 +31,7 @@ export class DetailsProductComponent implements OnInit {
         this.products = res.body;
         this.getProductId(12);
         this.productList = this.products[0]
+        this.operation="Vendu"
       },
       (err) => {
         alert('failed loading json data');
@@ -46,7 +51,6 @@ export class DetailsProductComponent implements OnInit {
         alert(err.error);
       });
     }
-
   }
 
   updateStock(quantityChange, product){
