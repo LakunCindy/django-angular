@@ -10,6 +10,14 @@ from rest_framework.response import Response
 
 # Create your views here.
 class Utilities():
+    def get_object_with_date(id):
+        try:
+            today = date.today()
+            todaystr = today.strftime("%Y-%m-%d")
+            return True, Cost.objects.get(created=todaystr,tigId=id)
+        except Cost.DoesNotExist: 
+            return False, todaystr
+
     def get_object(id):
         try:
             return Cost.objects.get(tigId=id)
@@ -21,26 +29,28 @@ class Utilities():
 class AddCost():
     def add(id,quantity,totalPrice):
         # today = date.today()
-        prod = Utilities.get_object(id)
+        prod = Utilities.get_object_with_date(id)
         # if prod.created.date() == today.strftime("%Y-%m-%d"):
-        if quantity >= 0 and totalPrice >= 0:
-            prod.quantity = prod.quantity + quantity
-            prod.totalPrice = prod.totalPrice + totalPrice
-            prod.save()
-            response = {}
-            response['message'] = 'Cout ajouté'
-            response['id'] = id
-            return True
-        else:
-            return False
-        # else:
-        #     if quantity >= 0 and totalPrice >=0:
-        #         serializer = CostSerializer(data={'tigId':str(id),'quantity':quantity,'totalPrice':totalPrice})
-        #         if serializer.is_valid():
-        #             serializer.save()
-        #             return True
-        #     else:
-        #         return False
+        if prod[0] is True:
+            prod = prod[1]
+            if quantity >= 0 and totalPrice >= 0:
+                prod.quantity = prod.quantity + quantity
+                prod.totalPrice = prod.totalPrice + totalPrice
+                prod.save()
+                response = {}
+                response['message'] = 'Cout ajouté'
+                response['id'] = id
+                return True
+            else:
+                return False
+        elif prod[0] is False:
+            if quantity >= 0 and totalPrice > 0:
+                serializer = CostSerializer(data={'tigId':str(id),'quantity':quantity,'totalPrice':totalPrice,'created':prod[1]})
+                if serializer.is_valid():
+                    serializer.save()
+                    return True
+            else:
+                return False
 
 #Obtenir le coùt annuelle pour une année donnée
 class TotalCostPerYear(APIView):

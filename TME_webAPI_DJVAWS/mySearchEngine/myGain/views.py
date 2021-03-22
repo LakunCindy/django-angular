@@ -112,7 +112,7 @@ class Test(APIView):
         if prods:
             for prod in prods:
                 if prod.tigId == id:
-                    totalSold += prod.totalPrice
+                    totalSold += prod.quantity
 
         response = {}
         response['totalSold']= totalSold
@@ -163,7 +163,7 @@ class NumberArticleSale():
         if prods:
             for prod in prods:
                 if prod.tigId == id:
-                    totalSold += prod.totalPrice
+                    totalSold += prod.quantity
 
         return totalSold
 

@@ -5,4 +5,4 @@ class CostSerializer(ModelSerializer):
 
     class Meta:
         model = Cost
-        fields = ('id','tigId','quantity','totalPrice')
+        fields = ('created','id','tigId','quantity','totalPrice')
