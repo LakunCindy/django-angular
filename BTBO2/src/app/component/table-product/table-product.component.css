@@ -1,3 +1,25 @@
+.block {
+  border: 1px solid #05067e;
+  border-radius: 10px;
+  font-size:xx-large;
+  background-color:  #05067e;
+  color: white;
+  margin-top: 20px;
+  width: 50%;
+  cursor: pointer;
+  text-align: center;
+}
+
+.block:hover {
+  background-color: #fe881c;
+  border: 1px solid #fe881c;
+  color: black;
+}
+
+.collapse {
+  margin-top: 10px;
+}
+
 #products {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -18,7 +40,7 @@
     padding-bottom: 12px;
     text-align: left;
     background-color: #fe881c;
-    color: white;
+    color: black;
   }
 
   input {

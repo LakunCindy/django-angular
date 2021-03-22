@@ -16,6 +16,7 @@ export class TableProductComponent implements OnInit {
   quantityChange:number = 0;
   promotionChange:number = 0;
   price;
+
   constructor(public productsService : ProductsService, private http: HttpClient) {
     this.product = [];
    }
@@ -63,7 +64,5 @@ export class TableProductComponent implements OnInit {
     }else{
       alert("Veuillez vérifier la saisie de votre quantité.");
     }
-    
   }
-
 }
