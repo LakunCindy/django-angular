@@ -129,7 +129,7 @@ class DecrementStock(APIView):
                 prod_in_database = response.json()
                 QuantityInStock.objects.update(quantity = new_quantity)
                 #récupère le produit de la table myRevendeurApp_quantityInStock avec la quantité à jour pour
-                gainIsAdd = AddGain.add(id,number,totalPrice,isSale)
+                gainIsAdd = AddGain.add(id,number,totalPrice)
                 if gainIsAdd:
                     response = {}
                     response['message']='Produit mis à jour'
