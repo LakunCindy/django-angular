@@ -21,12 +21,12 @@ export class ProductsService {
     return this.http.get<Product[]>(`${this.resourceUrlApi}/products`, { observe: 'response' })
   }
 
-  incrementProduct(id: number, number: number): Observable<EntityResponseType> {
-    return this.http.get<Product>(`${this.resourceUrlApi}/incrementStock/${id}/${number}`, { observe: 'response' })
+  incrementProduct(id: number, number: number, totalPrice:number): Observable<EntityResponseType> {
+    return this.http.get<Product>(`${this.resourceUrlApi}/incrementStock/${id}/${number}/${totalPrice}`, { observe: 'response' })
   }
 
-  decrementProduct(id: number, number: number): Observable<EntityResponseType> {
-    return this.http.get<Product>(`${this.resourceUrlApi}/decrementStock/${id}/${number}`, { observe: 'response' })
+  decrementProduct(id: number, number: number, totalPrice:number): Observable<EntityResponseType> {
+    return this.http.get<Product>(`${this.resourceUrlApi}/decrementStock/${id}/${number}/${totalPrice}`, { observe: 'response' })
   }
 
   updateQuantity(id: number, number: number): Observable<EntityResponseType> {

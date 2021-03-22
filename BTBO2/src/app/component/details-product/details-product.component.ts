@@ -16,10 +16,12 @@ export class DetailsProductComponent implements OnInit {
   afficherUpdateStock;
   quantityChange:number = 0;
   promotionChange:number = 0;
-  price;
   afficherUpdatePromo;
+  operation;
   afficherPrixAjout;
-  
+  prixAjout:number = 0;
+  totalPrice:number = 0;
+
   constructor(public productsService : ProductsService, private http: HttpClient) {
   }
 
@@ -28,6 +30,7 @@ export class DetailsProductComponent implements OnInit {
         this.products = res.body;
         this.getProductId(12);
         this.productList = this.products[0]
+        this.operation="Vendu"
       },
       (err) => {
         alert('failed loading json data');
@@ -41,7 +44,7 @@ export class DetailsProductComponent implements OnInit {
         this.product = res.body;
         this.afficherUpdateStock = false;
         this.afficherUpdatePromo = false;
-        this.quantityChange = res.body.quantity;
+        this.quantityChange = 0;
         this.afficherPrixAjout = false;
       },
       (err) => {
@@ -50,22 +53,49 @@ export class DetailsProductComponent implements OnInit {
     }
   }
 
-  getOperation(event: any){
-    if(event.target.value == "Ajouter"){
-      console.log(event.target.value);
+  getOperation(value:string){
+    if(value == "Ajouter"){
       this.afficherPrixAjout = true;
     }
     else{
       this.afficherPrixAjout = false;
     }
+    this.operation = value;
   }
 
-  updateStock(quantityChange, product){
+  updateStock(quantityChange, product, price, discount){
     if(parseInt(quantityChange))
     {
-      if(this.afficherPrixAjout == false)
+      if(this.operation == "Vendu")
       {
-        this.productsService.decrementProduct(product.id,quantityChange).subscribe(res => {
+        if(discount){
+          this.totalPrice = quantityChange * discount;
+        }
+        else{
+          this.totalPrice = quantityChange * price;
+        }
+        this.productsService.decrementProduct(product.id,quantityChange, this.totalPrice).subscribe(res => {
+          console.log(res);
+          this.getProductId(product.id);
+          alert("Votre modification de stock a bien été effectué.")
+        },
+        (err) => {
+          alert(err.error);
+        });
+      }
+      else if(this.operation == "Perimer")
+      {
+        this.productsService.decrementProduct(product.id,quantityChange, 0).subscribe(res => {
+          console.log(res);
+          this.getProductId(product.id);
+          alert("Votre modification de stock a bien été effectué.")
+        },
+        (err) => {
+          alert(err.error);
+        });
+      }
+      else if(this.operation == "Ajouter"){
+        this.productsService.incrementProduct(product.id,quantityChange, this.prixAjout).subscribe(res => {
           console.log(res);
           this.getProductId(product.id);
           alert("Votre modification de stock a bien été effectué.")
