@@ -33,10 +33,6 @@ export class ProductsService {
     return this.http.get<Product>(`${this.resourceUrlApi}/updateQuantity/${id}/${number}`, { observe: 'response' })
   }
 
-  updateQuantity(id: number, number: number): Observable<EntityResponseType> {
-    return this.http.get<Product>(`${this.resourceUrlApi}/updateQuantity/${id}/${number}`, { observe: 'response' })
-  }
-
   /**
    * Obtenir le produit avec sa quantité 
    * @param id : id du produit

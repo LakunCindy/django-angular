@@ -16,6 +16,7 @@ export class DetailsProductComponent implements OnInit {
   afficherUpdateStock;
   quantityChange:number = 0;
   promotionChange:number = 0;
+  price;
   afficherUpdatePromo;
   operation;
   afficherPrixAjout;
@@ -44,8 +45,7 @@ export class DetailsProductComponent implements OnInit {
         this.product = res.body;
         this.afficherUpdateStock = false;
         this.afficherUpdatePromo = false;
-        this.quantityChange = 0;
-        this.afficherPrixAjout = false;
+        this.quantityChange = res.body.quantity;
       },
       (err) => {
         alert(err.error);
@@ -53,57 +53,17 @@ export class DetailsProductComponent implements OnInit {
     }
   }
 
-  getOperation(value:string){
-    if(value == "Ajouter"){
-      this.afficherPrixAjout = true;
-    }
-    else{
-      this.afficherPrixAjout = false;
-    }
-    this.operation = value;
-  }
-
-  updateStock(quantityChange, product, price, discount){
+  updateStock(quantityChange, product){
     if(parseInt(quantityChange))
     {
-      if(this.operation == "Vendu")
-      {
-        if(discount){
-          this.totalPrice = quantityChange * discount;
-        }
-        else{
-          this.totalPrice = quantityChange * price;
-        }
-        this.productsService.decrementProduct(product.id,quantityChange, this.totalPrice).subscribe(res => {
-          console.log(res);
-          this.getProductId(product.id);
-          alert("Votre modification de stock a bien été effectué.")
-        },
-        (err) => {
-          alert(err.error);
-        });
-      }
-      else if(this.operation == "Perimer")
-      {
-        this.productsService.decrementProduct(product.id,quantityChange, 0).subscribe(res => {
-          console.log(res);
-          this.getProductId(product.id);
-          alert("Votre modification de stock a bien été effectué.")
-        },
-        (err) => {
-          alert(err.error);
-        });
-      }
-      else if(this.operation == "Ajouter"){
-        this.productsService.incrementProduct(product.id,quantityChange, this.prixAjout).subscribe(res => {
-          console.log(res);
-          this.getProductId(product.id);
-          alert("Votre modification de stock a bien été effectué.")
-        },
-        (err) => {
-          alert(err.error);
-        });
-      }
+      this.productsService.updateQuantity(product.id,quantityChange).subscribe(res => {
+        console.log(res);
+        this.getProductId(product.id);
+        alert("Votre modification de stock a bien été effectué.")
+      },
+      (err) => {
+        alert(err.error);
+      });
     }else{
       alert("Veuillez vérifier la saisie de votre promotion.");
     }
