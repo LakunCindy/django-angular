@@ -12,6 +12,7 @@ export class TableProductComponent implements OnInit {
 
   products: Product[];
   product;
+  pourcentages;
   productList;
   quantityChange:number = 0;
   promotionChange:number = 0;
@@ -22,12 +23,13 @@ export class TableProductComponent implements OnInit {
 
   ngOnInit() {
     this.getProducts();
+    this.pourcentages = new Array();
+    this.pourcentages = ["none", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%"];
   }
 
   getProducts(){
     this.productsService.getData().subscribe(res => {
       this.products = res.body;
-      this.getProducts();
     },
     (err) => {
       alert('failed loading json data');
