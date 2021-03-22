@@ -23,14 +23,23 @@
                             <button (click)="updateSale(0, product, product.price)">-</button>
                         </ng-container>
                     </td>
-                    <td><input style="width: 50px; border: 2px solid;"/></td>
+                    <td>
+                        <select id="select_pourcentage_{{product.id}}">
+                            <option *ngFor="let pourcentage of pourcentages" value="{{pourcentage}}">{{pourcentage}}</option>
+                        </select>
+                    </td>
                     <td>
                         {{product.quantity}}
-                        <input style="width: 50px; border: 2px solid;"/>
+                        <input id="input_quantity_{{product.id}}" style="width: 50px; border: 2px solid;"/>
+                        <select id="select_operation{{product.id}}" (change)='getOperation($event.target.value)'>
+                            <option value="Vendu">Vendu</option>
+                            <option value="Perimer">Perimer</option>
+                            <option value="Ajouter">Ajouter</option>
+                         </select>
                     </td>
                     <td>{{product.quantity_sold}}</td>
                     <td>{{product.comments}}</td>  
-                    <td><button (click)="updateStock(quantityChange, product)">Update</button></td>                
+                    <td><button>Update</button></td>                
                 </ng-container>          
             </tr>      
         </table>
@@ -62,11 +71,23 @@
                             <button (click)="updateSale(0, product, product.price)">-</button>
                         </ng-container>
                     </td>
-                    <td>vide</td>
-                    <td>{{product.quantity}}</td>
+                    <td>
+                        <select id="select_pourcentage_{{product.id}}">
+                            <option *ngFor="let pourcentage of pourcentages" value="{{pourcentage}}">{{pourcentage}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        {{product.quantity}}
+                        <input id="{{product.id}}" style="width: 50px; border: 2px solid;"/>
+                        <select id="select_operation{{product.id}}" (change)='getOperation($event.target.value)'>
+                            <option value="Vendu">Vendu</option>
+                            <option value="Perimer">Perimer</option>
+                            <option value="Ajouter">Ajouter</option>
+                         </select>
+                    </td>
                     <td>{{product.quantity_sold}}</td>
                     <td>{{product.comments}}</td>  
-                    <td><button (click)="updateStock(quantityChange, product)">Update</button></td>
+                    <td><button>Update</button></td>
                 </ng-container>          
             </tr>  
         </table>
@@ -98,11 +119,23 @@
                             <button (click)="updateSale(0, product, product.price)">-</button>
                         </ng-container>
                     </td>
-                    <td><input/></td>
-                    <td>{{product.quantity}}</td>
+                    <td>
+                        <select id="select_pourcentage_{{product.id}}">
+                            <option *ngFor="let pourcentage of pourcentages" value="{{pourcentage}}">{{pourcentage}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        {{product.quantity}}
+                        <input id="{{product.id}}" style="width: 50px; border: 2px solid;"/>
+                        <select id="select_operation{{product.id}}" (change)='getOperation($event.target.value)'>
+                            <option value="Vendu">Vendu</option>
+                            <option value="Perimer">Perimer</option>
+                            <option value="Ajouter">Ajouter</option>
+                         </select>
+                    </td>
                     <td>{{product.quantity_sold}}</td>
                     <td>{{product.comments}}</td>
-                    <td><button (click)="updateStock(quantityChange, product)">Update</button></td>  
+                    <td><button>Update</button></td>  
                 </ng-container>          
             </tr>     
         </table>
