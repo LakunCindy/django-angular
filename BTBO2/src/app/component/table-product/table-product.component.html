@@ -51,7 +51,7 @@
                 <td>
                     {{product.discount}}
                     <ng-container *ngIf="product.sale == true">
-                        <button>-</button>
+                        <button (click)="updateSale(0, product, product.price)">-</button>
                     </ng-container>
                 </td>
                 <td><input></td>
@@ -84,7 +84,7 @@
                 <td>
                     {{product.discount}}
                     <ng-container *ngIf="product.sale == true">
-                        <button>-</button>
+                        <button (click)="updateSale(0, product, product.price)">-</button>
                     </ng-container>
                 </td>
                 <td><input/></td>
