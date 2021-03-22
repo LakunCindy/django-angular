@@ -48,6 +48,7 @@ export class TableProductComponent implements OnInit {
     }else{
       alert("Veuillez vérifier la saisie de votre promotion.");
     }
+    
   }
 
   updateSale(promotionChange, product, price){
@@ -63,7 +64,5 @@ export class TableProductComponent implements OnInit {
     }else{
       alert("Veuillez vérifier la saisie de votre quantité.");
     }
-    
   }
-
 }

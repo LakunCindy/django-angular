@@ -16,8 +16,6 @@ from rest_framework.response import Response
 class Utilities():
     def get_object(id):
         try:
-            # today = date.today()
-            # today.strftime("%Y-%m-%d"):
             return Gain.objects.get(tigId=id)
         except Gain.DoesNotExist: 
             return False

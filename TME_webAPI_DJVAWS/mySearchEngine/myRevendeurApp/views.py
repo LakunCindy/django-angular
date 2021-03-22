@@ -120,7 +120,7 @@ class DecrementStock(APIView):
         except QuantityInStock.DoesNotExist:
             return Response('id not found',status=404)
     
-    def get(self,request,id,number,totalPrice,format=None):
+      def get(self,request,id,number,totalPrice,format=None):
         prod_in_quantity_in_stock = self.get_object(id)
         if prod_in_quantity_in_stock:
             new_quantity = self.new_quantity(id,number)
