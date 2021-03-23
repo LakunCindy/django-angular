@@ -60,7 +60,7 @@ class AddGain():
             
 
 #Obtenir le coùt annuelle pour une année donnée
-class TotalGainPerYear(APIView):
+class TotalGainForYear(APIView):
 
     def get(self,request,year):
         prods = Gain.objects.all()
@@ -71,13 +71,62 @@ class TotalGainPerYear(APIView):
                     totalGainPerYear += prod.totalPrice
                 
             response = {}
-            response['message']= 'Le coût total est :'
+            response['message']= 'Le chiffre total est :'
             response['totalGainPerYear']= totalGainPerYear
             return Response(response,status=200)
         else:
             erreur = {}
             erreur['message'] = 'Aucunes données trouvées'
             return Response(erreur,status=404)
+
+class AllGainPerMonthForYear(APIView):
+    def get(self,resquest,year):
+        prods = Gain.objects.all()
+        months = {
+            '1':0,
+            '2':0,
+            '3':0,
+            '4':0,
+            '5':0,
+            '6':0,
+            '7':0,
+            '8':0,
+            '9':0,
+            '10':0,
+            '11':0,
+            '12':0,
+        }
+        if prods:
+            for prod in prods:
+                if prod.created[:4] == str(year):
+                    date = datetime.datetime.strptime(prod.created, '%Y-%m-%d')
+                    print(date.month)
+                    months[str(date.month)] = months[str(date.month)] + prod.totalPrice
+        
+            return Response(months,status=200)
+               
+
+class Test(APIView):
+
+    def get(self,request):
+        prods = Gain.objects.filter(tigId=12).all()
+        mouths = {
+            '1':0,
+            '2':0,
+            '3':10,
+            '4':0,
+            '5':0,
+            '6':0,
+            '7':0,
+            '8':0,
+            '9':0,
+            '10':0,
+            '11':0}
+           
+
+        response = {}
+        response['mouth']= prods[1].quantity
+        return Response(response,status=200)
 
 
 class TheMostSaleForYear(APIView):
@@ -92,6 +141,10 @@ class TheMostSaleForYear(APIView):
                     if prod.quantity > maxQuantity:
                         maxQuantity = prod.quantity
                         mostSaleId = prod.tigId
+                        
+            # for prod in otherProductsWithIdMostSale:
+            #    if prod.quantity != maxQuantity:
+            #        maxQuantity += prod.quantity
 
             response = {}
             response['message']= 'Le plus vendu :'
@@ -102,22 +155,6 @@ class TheMostSaleForYear(APIView):
             erreur = {}
             erreur['message'] = 'Aucunes données trouvées'
             return Response(erreur,status=404)
-
-class Test(APIView):
-
-    def get(self,request,id):
-        prods = Gain.objects.all()
-        totalSold = 0
-
-        if prods:
-            for prod in prods:
-                if prod.tigId == id:
-                    totalSold += prod.quantity
-
-        response = {}
-        response['totalSold']= totalSold
-        return Response(response,status=200)
-
 
 class Impot(APIView):
 
