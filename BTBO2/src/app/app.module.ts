@@ -1,15 +1,29 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { Routes, RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DetailsProductComponent } from './component/details-product/details-product.component';
 import { HomeComponent } from './component/home/home.component';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './component/header/header.component';
 import { TableProductComponent } from './component/table-product/table-product.component';
-import { LoginComponent } from './component/login/login.component';
+import { LoginComponent } from './main/login/login.component';
+import { ProfileComponent } from './main/profile/profile.component';
+import { InterceptorService } from './services/interceptor-service.service'
+import { StatsComponent } from './component/stats/stats.component';
+
+const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent
+  },
+];
 
 @NgModule({
   declarations: [
@@ -18,15 +32,24 @@ import { LoginComponent } from './component/login/login.component';
     HomeComponent,
     HeaderComponent,
     TableProductComponent,
-    LoginComponent
+    LoginComponent,
+    StatsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    { 
+      provide: HTTP_INTERCEPTORS, 
+      useClass: InterceptorService, 
+      multi: true 
+    } 
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
