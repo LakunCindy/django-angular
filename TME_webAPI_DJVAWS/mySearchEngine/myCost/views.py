@@ -60,7 +60,7 @@ class TotalCostPerYear(APIView):
         totalCostPerYear = 0
         if prods:
             for prod in prods:
-                if prod.created.today().year == year:
+                if prod.created[:4] == year:
                     totalCostPerYear += prod.totalPrice
                 
             response = {}
