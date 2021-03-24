@@ -13,6 +13,8 @@ import { LoginComponent } from './main/login/login.component';
 import { ProfileComponent } from './main/profile/profile.component';
 import { InterceptorService } from './services/interceptor-service.service'
 import { StatsComponent } from './component/stats/stats.component';
+import { YearGainComponent } from './component/sub-component/year-gain/year-gain.component';
+import { MonthGainComponent } from './component/sub-component/month-gain/month-gain.component';
 
 const routes: Routes = [
   {
@@ -34,7 +36,9 @@ const routes: Routes = [
     TableProductComponent,
     LoginComponent,
     StatsComponent,
-    ProfileComponent
+    ProfileComponent,
+    YearGainComponent,
+    MonthGainComponent
   ],
   imports: [
     BrowserModule,
