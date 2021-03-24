@@ -45,7 +45,7 @@ export class DetailsProductComponent implements OnInit {
         this.product = res.body;
         this.afficherUpdateStock = false;
         this.afficherUpdatePromo = false;
-        this.quantityChange = res.body.quantity;
+        this.afficherPrixAjout = false;
       },
       (err) => {
         alert(err.error);
@@ -53,17 +53,58 @@ export class DetailsProductComponent implements OnInit {
     }
   }
 
-  updateStock(quantityChange, product){
+  getOperation(operation){
+    console.log(operation);
+    this.operation = operation;
+    if(operation == "Ajouter"){
+      this.afficherPrixAjout = true;
+    }
+    else{
+      this.afficherPrixAjout = false;
+    }
+  }
+
+  updateStock(quantityChange, product, price, discount){
     if(parseInt(quantityChange))
     {
-      this.productsService.updateQuantity(product.id,quantityChange).subscribe(res => {
-        console.log(res);
-        this.getProductId(product.id);
-        alert("Votre modification de stock a bien été effectué.")
-      },
-      (err) => {
-        alert(err.error);
-      });
+      if(this.operation == "Ajouter")
+      {
+        this.totalPrice = price;
+        this.productsService.incrementProduct(product.id,quantityChange, this.totalPrice).subscribe(res => {
+          console.log(res);
+          this.getProductId(product.id);
+          alert("Votre modification de stock a bien été effectué.")
+        },
+        (err) => {
+          alert(err.error);
+        });
+      }
+      else if(this.operation == "Vendu"){
+        if(discount){
+          this.totalPrice = discount * quantityChange; 
+        }
+        else{
+          this.totalPrice = price * quantityChange;
+        }
+        this.productsService.decrementProduct(product.id,quantityChange, this.totalPrice).subscribe(res => {
+          console.log(res);
+          this.getProductId(product.id);
+          alert("Votre modification de stock a bien été effectué.")
+        },
+        (err) => {
+          alert(err.error);
+        });
+      }
+      else{
+        this.productsService.decrementProduct(product.id,quantityChange, 0).subscribe(res => {
+          console.log(res);
+          this.getProductId(product.id);
+          alert("Votre modification de stock a bien été effectué.")
+        },
+        (err) => {
+          alert(err.error);
+        });
+      }
     }else{
       alert("Veuillez vérifier la saisie de votre promotion.");
     }
