@@ -15,6 +15,7 @@ import { InterceptorService } from './services/interceptor-service.service'
 import { StatsComponent } from './component/stats/stats.component';
 import { YearGainComponent } from './component/sub-component/year-gain/year-gain.component';
 import { MonthGainComponent } from './component/sub-component/month-gain/month-gain.component';
+import { ContainerComponent } from './component/container/container.component';
 
 const routes: Routes = [
   {
@@ -38,7 +39,8 @@ const routes: Routes = [
     StatsComponent,
     ProfileComponent,
     YearGainComponent,
-    MonthGainComponent
+    MonthGainComponent,
+    ContainerComponent
   ],
   imports: [
     BrowserModule,

@@ -13,6 +13,7 @@ export class ProfileComponent implements OnInit {
   constructor( 
     private _api : ApiService, 
     private _auth: AuthService, 
+    private router: Router
   ) { } 
  
   ngOnInit(): void { 
@@ -26,5 +27,6 @@ export class ProfileComponent implements OnInit {
     }, err => { 
       console.log(err) 
     }); 
+    this.router.navigate(['container']) 
   } 
 }
