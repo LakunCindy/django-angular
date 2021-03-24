@@ -1,3 +1,5 @@
+import { SimplePlaceholderMapper } from "@angular/compiler/src/i18n/serializers/serializer";
+
 export interface IProduct{
     id:number,
     name:string,
@@ -8,6 +10,7 @@ export interface IProduct{
     sale:boolean,
     unit:string,
     quantity:number,
+    quantitySold:number,
     owner:string,
     comments:string
 }
@@ -23,6 +26,7 @@ export class Product implements IProduct{
         public sale:boolean,
         public unit:string,
         public quantity:number,
+        public quantitySold:number,
         public owner:string,
         public comments:string){
 

@@ -21,7 +21,7 @@
             <button (click)="afficherUpdatePromo=true">Modifier promotion</button>
             <button (click)="updateSale(0, product, product.price)">Retirer promotion</button>
             <div *ngIf="afficherUpdatePromo == true">
-               <input class="form-control" required [(ngModel)]="promotionChange"/>
+               <input required [(ngModel)]="promotionChange"/>
                <button (click)="updateSale(promotionChange, product, product.price)">Valider</button> 
             </div>  
          </li>                   
@@ -37,14 +37,15 @@
                   <option value="Ajouter">Ajouter</option>
                </select>
 
-               <ng-container *ngIf="afficherPrixAjout">
+               <ng-container *ngIf="afficherPrixAjout == true">
                   <input type="text" required [(ngModel)]="prixAjout" placeholder="Prix de l'ajout" />
                </ng-container>
+               
                <button (click)="updateStock(quantityChange, product, product.price, product.discount)">Valider</button>
             </div>
          </li>        
         <li>
-            Nombre d'article vendus : {{product.quantity_sold}}
+            Nombre d'article vendus : {{product.quantitySold}}
          </li>
         <li>
             Commentaire : {{product.comments}}

@@ -31,13 +31,16 @@
                     <td>
                         {{product.quantity}}
                         <input id="input_quantity_{{product.id}}" style="width: 50px; border: 2px solid;"/>
-                        <select id="select_operation{{product.id}}" (change)='getOperation($event.target.value)'>
+                        <select id="select_operation_{{product.id}}" (change)='getOperation($event.target.value)'>
                             <option value="Vendu">Vendu</option>
                             <option value="Perimer">Perimer</option>
                             <option value="Ajouter">Ajouter</option>
                          </select>
+                         <ng-container>
+                            <input type="text" id="input_prix_{{product.id}}" placeholder="Prix de l'ajout" />
+                         </ng-container>
                     </td>
-                    <td>{{product.quantity_sold}}</td>
+                    <td>{{product.quantitySold}}</td>
                     <td>{{product.comments}}</td>  
                     <td><button>Update</button></td>                
                 </ng-container>          
@@ -78,14 +81,17 @@
                     </td>
                     <td>
                         {{product.quantity}}
-                        <input id="{{product.id}}" style="width: 50px; border: 2px solid;"/>
-                        <select id="select_operation{{product.id}}" (change)='getOperation($event.target.value)'>
+                        <input id="input_quantity_{{product.id}}" style="width: 50px; border: 2px solid;"/>
+                        <select id="select_operation_{{product.id}}" (change)='getOperation($event.target.value)'>
                             <option value="Vendu">Vendu</option>
                             <option value="Perimer">Perimer</option>
                             <option value="Ajouter">Ajouter</option>
                          </select>
+                         <ng-container>
+                            <input type="text" id="input_prix_{{product.id}}" placeholder="Prix de l'ajout" />
+                         </ng-container>
                     </td>
-                    <td>{{product.quantity_sold}}</td>
+                    <td>{{product.quantitySold}}</td>
                     <td>{{product.comments}}</td>  
                     <td><button>Update</button></td>
                 </ng-container>          
@@ -126,14 +132,17 @@
                     </td>
                     <td>
                         {{product.quantity}}
-                        <input id="{{product.id}}" style="width: 50px; border: 2px solid;"/>
-                        <select id="select_operation{{product.id}}" (change)='getOperation($event.target.value)'>
+                        <input id="input_quantity_{{product.id}}" style="width: 50px; border: 2px solid;"/>
+                        <select id="select_operation_{{product.id}}" (change)='getOperation($event.target.value)'>
                             <option value="Vendu">Vendu</option>
                             <option value="Perimer">Perimer</option>
                             <option value="Ajouter">Ajouter</option>
                          </select>
+                         <ng-container>
+                            <input type="text" id="input_prix_{{product.id}}" placeholder="Prix de l'ajout" />
+                         </ng-container>
                     </td>
-                    <td>{{product.quantity_sold}}</td>
+                    <td>{{product.quantitySold}}</td>
                     <td>{{product.comments}}</td>
                     <td><button>Update</button></td>  
                 </ng-container>          
