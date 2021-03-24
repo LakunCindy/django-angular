@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'myRevendeurApp.apps.MyrevendeurappConfig',
     'myManageSale.apps.MymanagesaleConfig',
     'myCost.apps.MycostConfig',
-    'myGain.apps.MygainConfig'
+    'myGain.apps.MygainConfig',
+    'JsonWebToken.apps.JsonwebtokenConfig'
 #...end of TME10...#
 ####################
 ]
