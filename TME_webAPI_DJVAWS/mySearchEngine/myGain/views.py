@@ -100,32 +100,48 @@ class AllGainPerMonthForYear(APIView):
             for prod in prods:
                 if prod.created[:4] == str(year):
                     date = datetime.datetime.strptime(prod.created, '%Y-%m-%d')
-                    print(date.month)
                     months[str(date.month)] = months[str(date.month)] + prod.totalPrice
         
             return Response(months,status=200)
-               
+        else:
+            erreur = {}
+            erreur['message'] = 'Aucunes données trouvées'
+            return Response(erreur,status=404)
+
+class AllGainPerDayForAYear(APIView):
+    def generateMonth(TheMostSaleForYear):
+        days = {}
+        for i in range(1,32):
+            days[str(i)] = 0
+        return days
+
+    def get(self,request,year,month):
+        days = self.generateMonth()
+        prods = Gain.objects.all()
+
+        if prods:
+            for prod in prods:
+                if prod.created[:4] == year:
+                    date = datetime.datetime.strptime(prod.created,'%Y-%m-%d')
+                    monthProd = date.month
+                    dayProd = date.day
+                    if str(monthProd) == month:
+                        days[str(dayProd)] = days[str(dayProd)] + prod.totalPrice
+
+            return Response(days,status=200)
+        else:
+            erreur = {}
+            erreur['message'] = 'Aucunes données trouvées'
+            return Response(erreur,status=404)
+
 
 class Test(APIView):
 
     def get(self,request):
-        prods = Gain.objects.filter(tigId=12).all()
-        mouths = {
-            '1':0,
-            '2':0,
-            '3':10,
-            '4':0,
-            '5':0,
-            '6':0,
-            '7':0,
-            '8':0,
-            '9':0,
-            '10':0,
-            '11':0}
-           
+        prods = Gain.objects.all()
 
         response = {}
-        response['mouth']= prods[1].quantity
+        response['mouth']= prods[0].created[8:]
         return Response(response,status=200)
 
 
@@ -134,17 +150,19 @@ class TheMostSaleForYear(APIView):
     def get(self,request,year):
         prods = Gain.objects.all()
         maxQuantity = 0
-        mostSaleId = 0
+        mostSaleId = 0 #cas de produits ayant la meme plus grande quantité à traiter
         if prods:
             for prod in prods:
                 if prod.created[:4] == year:
                     if prod.quantity > maxQuantity:
                         maxQuantity = prod.quantity
                         mostSaleId = prod.tigId
-                        
-            # for prod in otherProductsWithIdMostSale:
-            #    if prod.quantity != maxQuantity:
-            #        maxQuantity += prod.quantity
+
+            productsWithIdMostSale = Gain.objects.filter(tigId=mostSaleId).all()
+            maxQuantity = 0            
+            for prod in productsWithIdMostSale:
+                if prod.created[:4] == year:
+                    maxQuantity += prod.quantity
 
             response = {}
             response['message']= 'Le plus vendu :'
