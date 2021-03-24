@@ -34,7 +34,7 @@ class RedirectionListeDeProduits(APIView):
             prod['quantity'] = serializer.data['quantity']
             prod['discount'] = serializer_discount.data['discount']
             prod['sale'] = serializer_discount.data['sale']
-            prod['quantitySold'] = NumberArticleSale.get(pk)
+            prod['quantitySold'] = NumberArticleSale.get(prod['id'])
             new_json.append(prod)
         return Response(new_json)
 #    def post(self, request, format=None):
