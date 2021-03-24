@@ -10,7 +10,8 @@ Pour la partie serveur :
                   mySearchEngine: pip3 install django djangorestframework requests
                                   pip install django-cors-headers
                                   pip install djangorestframework_simplejwt
-                                  cd
+                                  py manage.py createsuperuser
+                                  py manage.py runserver
 
 
 Pour la partie client : 
