@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'; 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'; 
 import { Router } from '@angular/router'; 
+import { log } from 'console';
 import { AuthService } from 'src/app/services/auth.service'; 
 import {ApiService} from '../../services/api.service' 
  
@@ -32,8 +33,23 @@ export class LoginComponent implements OnInit {
     this._api.postTypeRequest('api/token/', b).subscribe((res: any) => { 
       console.log(res) 
       if(res.access){ 
-        this._auth.setDataInLocalStorage('token', res.access) 
-        this.router.navigate(['profile']) 
+        this._auth.setDataInLocalStorage('token', res.access)
+        this._auth.setDataInLocalStorage('refresh', res.refresh) 
+        this.router.navigate(['home']) 
+      } 
+    }, err => { 
+      console.log(err) 
+    })
+    setInterval(() => {this.refresh()},270000)
+  } 
+
+  refresh(){ 
+    let refreshToken= {refresh: this._auth.getRefreshToken()}
+    
+    this._api.postTypeRequest('api/token/refresh/', refreshToken).subscribe((res: any) => { 
+      console.log('ok',res) 
+      if(res.access){ 
+        this._auth.setDataInLocalStorage('token', res.access)
       } 
     }, err => { 
       console.log(err) 
