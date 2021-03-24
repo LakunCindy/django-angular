@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   login(){ 
     let b = this.form.value 
     console.log(b) 
-    this._api.postTypeRequest('api/token/', b).subscribe((res: any) => { 
+    this._api.postTypeRequest('user/', b).subscribe((res: any) => { 
       console.log(res) 
       if(res.access){ 
         this._auth.setDataInLocalStorage('token', res.access)
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
     }, err => { 
       console.log(err) 
     })
-    setInterval(() => {this.refresh()},270000)
+    /*setInterval(() => {this.refresh()},270000)*/
   } 
 
   refresh(){ 
