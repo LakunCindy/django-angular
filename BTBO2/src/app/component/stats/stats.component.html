@@ -1,34 +1,13 @@
-<div class="container-fluid h-100">
-    <div class="row justify-content-center h-100" ng-model="myVar">
-        <div class="col-sm-2" id="menu">
-            <h2>Menu</h2>
-            <div class="btn-group-vertical">
-                <button type="button" class="btn btn-primary" value="dogs">Apple</button>
-                <button type="button" class="btn btn-primary" value="tuts">Samsung</button>
-                <button type="button" class="btn btn-primary" value="cars">Sony</button>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-1">
+            <div class="sidenav">
+                <a routerLink="/yeargain" routerLinkActive="active">Year</a>
+                <a routerLink="/monthgain" routerLinkActive="active">Month</a>
             </div> 
         </div>
-        <div class="col-sm-10">
-            <hr>
-            <div [ngSwitch]="dogs">
-                <div *ngSwitchCase="dogs">
-                    <h1>Dogs</h1>
-                    <p>Welcome to a world of dogs.</p>
-                </div>
-                <div *ngSwitchCase="tuts">
-                    <h1>Tutorials</h1>
-                    <p>Learn from examples.</p>
-                </div>
-                <div *ngSwitchCase="cars">
-                    <h1>Cars</h1>
-                    <p>Read about cars.</p>
-                </div>
-                <div *ngSwitchDefault>
-                    <h1>Switch</h1>
-                    <p>Select topic from the dropdown, to switch the content of this DIV.</p>
-                </div>
-            </div>
-            <hr>
+        <div class="col-sm-11">
+            <router-outlet name='sub-component'></router-outlet>
         </div>
     </div>
 </div>
