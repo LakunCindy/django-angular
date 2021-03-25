@@ -17,19 +17,27 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    setInterval(() => {this.refresh()},270000)
+    setInterval(() => {this.refresh()},60000)
+    setInterval(() => {this.getToken()},60000)
   }
 
   refresh() {
     let refreshToken = { refresh: this._auth.getRefreshToken() }
 
     this._api.postTypeRequest('api/token/refresh/', refreshToken).subscribe((res: any) => {
-      console.log('ok', res)
+      console.log('refresh', res)
       if (res.access) {
         this._auth.setDataInLocalStorage('token', res.access)
       }
     }, err => {
       console.log(err)
     });
+  }
+
+  getToken() { 
+    let item=localStorage.getItem('token')
+    console.log(item)
+    return item; 
+    
   }
 }
