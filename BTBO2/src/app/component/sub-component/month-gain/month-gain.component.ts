@@ -36,11 +36,16 @@ export class MonthGainComponent implements OnInit {
   ngOnInit() {
     this.getGainPerMonth('2021')
     this.createSvg();
-    this.drawBars(this.data);
+    
   }
 
   getGainPerMonth(annee:string){
-    this.dataservice.getGainPerMonth(annee).subscribe(resp => {console.log(this.sales = resp.body)})
+    this.dataservice.getGainPerMonth(annee).subscribe(resp => {
+        this.sales = resp.body
+        for (let i = 1; i<13; i++){
+        this.data[i-1].Month = this.sales.months[i].toString();
+        }
+        this.drawBars(this.data)})    
   }
 
   private createSvg(): void {
@@ -69,7 +74,7 @@ private drawBars(data: any[]): void {
 
   // Create the Y-axis band scale
   const y = d3.scaleLinear()
-  .domain([0, 200000])
+  .domain([0, 1000])
   .range([this.height, 0]);
 
   // Draw the Y-axis on the DOM
