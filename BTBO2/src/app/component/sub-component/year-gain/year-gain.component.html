@@ -1,7 +1,7 @@
 <h2>Bar Chart</h2>
 <label for="year-select">Choississez l'année:</label>
 
-<select name="years" id="year-select">
+<select #yearList id="year-select" [ngModel]="yearList.value" (change)='getGainPerMonth(yearList.value)'>
     <option value="">--Veuillez choisir une année--</option>
     <option value="2017">2017</option>
     <option value="2018">2018</option>

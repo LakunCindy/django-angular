@@ -35,10 +35,8 @@ export class YearGainComponent implements OnInit {
   constructor(private dataservice: DataService) { }
 
   ngOnInit() {
-    this.getGainPerMonth('2021')
-    this.createSvg();
-    
-  }
+    this.getGainPerMonth("2021")
+     }
 
   getGainPerMonth(annee:string){
     this.dataservice.getGainPerMonth(annee).subscribe(resp => {
@@ -46,14 +44,16 @@ export class YearGainComponent implements OnInit {
         for (let i = 1; i<13; i++){
         this.data[i-1].Month = this.sales.months[i].toString();
         }
+        d3.select("svg").remove();
+        this.createSvg();
         this.drawBars(this.data)})    
   }
 
   private createSvg(): void {
     this.svg = d3.select("figure#bar")
     .append("svg")
-    .attr("width", this.width + (this.margin * 2))
-    .attr("height", this.height + (this.margin * 2))
+    .attr("width", this.width + (this.margin * 2.5))
+    .attr("height", this.height + (this.margin * 2.5))
     .append("g")
     .attr("transform", "translate(" + this.margin + "," + this.margin + ")");
 }
