@@ -1,10 +1,10 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { dataGraph } from './data-graph.model';
+import { dataGraph, totalGain } from './data-graph.model';
 
-type EntityResponseType = HttpResponse<dataGraph>;
-type EntityResponseTypeArray = HttpResponse<dataGraph[]>;
+type EntityResponseType_dataGraph = HttpResponse<dataGraph>;
+type EntityResponseType_totalGain = HttpResponse<totalGain>;
 
 @Injectable({
   providedIn: 'root'
@@ -15,16 +15,22 @@ export class DataService {
 
   constructor(protected http: HttpClient) { }
 
-  getGainPerMonth(annee:string): Observable<EntityResponseType> { 
+  getGainPerMonthForYear(annee:string): Observable<EntityResponseType_dataGraph> { 
     return this.http.get<dataGraph>
     (`${this.resourceUrlApi}/allGainPerMonthForYear/${annee}`,
      { observe: 'response' })
    }
 
-  getGainPerYear(annee:string) { 
-    return this.http.get<any>
-    (`${this.resourceUrlApi}/allGainPerMonthForYear/${annee}`,
+  getTotalGainForYear(annee:string): Observable<EntityResponseType_totalGain>{ 
+    return this.http.get<totalGain>
+    (`${this.resourceUrlApi}/totalGainForYear/${annee}`,
      { observe: 'response' })
    }
+
+   getGainPerDayForMonth(annee:string, mois:string): Observable<EntityResponseType_dataGraph>{
+    return this.http.get<dataGraph>
+    (`${this.resourceUrlApi}/allGainPerDayForAMonth/${annee}/${mois}`,
+     { observe: 'response' })
+  }
 
 }

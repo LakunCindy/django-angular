@@ -5,6 +5,10 @@ export interface IGraph{
     days:Map<string,number>
 }
 
+export interface ITotalGain{
+    totalGainPerYear:number
+}
+
 export class dataGraph implements IGraph{
     constructor(
         public mostSaleQuantity:number,
@@ -13,4 +17,9 @@ export class dataGraph implements IGraph{
         public days:Map<string,number>){
             
     }
+}
+
+export class totalGain implements ITotalGain{
+    constructor(
+        public totalGainPerYear:number){}
 }
