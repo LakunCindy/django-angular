@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       if(res.access){ 
         this._auth.setDataInLocalStorage('token', res.access)
         this._auth.setDataInLocalStorage('refresh', res.refresh) 
-        this.router.navigate(['contrainer'])
+        this.router.navigate(['container'])
       } 
     }, err => { 
       console.log(err) 
