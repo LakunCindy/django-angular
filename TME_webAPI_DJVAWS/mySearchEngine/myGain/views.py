@@ -123,7 +123,7 @@ class AllGainPerMonthForYear(APIView):
             return Response(erreur,status=404)
 
 #obtenir le chiffre d'affaire par jour pour un mois donné ainsi que le plus vendu du mois
-class AllGainPerDayForAYear(APIView):
+class AllGainPerDayForAMonth(APIView):
     def generateMonth(TheMostSaleForYear):
         days = {}
         for i in range(1,32):

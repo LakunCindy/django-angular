@@ -8,6 +8,6 @@ urlpatterns = [
     path('impot/<str:year>', views.Impot.as_view()),
     path('test/', views.Test.as_view()),
     path('allGainPerMonthForYear/<str:year>/',views.AllGainPerMonthForYear.as_view()),
-    path('allGainPerDayForAYear/<str:year>/<str:month>',views.AllGainPerDayForAYear.as_view())
+    path('allGainPerDayForAMonth/<str:year>/<str:month>',views.AllGainPerDayForAMonth.as_view())
 
 ]
