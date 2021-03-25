@@ -27,6 +27,6 @@ export class ProfileComponent implements OnInit {
     }, err => { 
       console.log(err) 
     }); 
-    this.router.navigate(['container']) 
+    this.router.navigate(['container'])
   } 
 }

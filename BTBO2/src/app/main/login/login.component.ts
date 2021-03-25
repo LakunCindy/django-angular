@@ -20,25 +20,32 @@ export class LoginComponent implements OnInit {
  
   ngOnInit(): void { 
     this.form = this.fb.group({ 
-      username: ['', Validators.required], 
-      password:['', Validators.required] 
+      username: ['louis', Validators.required], 
+      password:['abcd1234', Validators.required] 
     }); 
     
   } 
  
   login(){ 
     let b = this.form.value 
-    console.log(b) 
+    console.log(b)
     this._api.postTypeRequest('api/token/', b).subscribe((res: any) => { 
-      console.log(res) 
+      console.log(res)
       if(res.access){ 
         this._auth.setDataInLocalStorage('token', res.access)
         this._auth.setDataInLocalStorage('refresh', res.refresh) 
-        this.router.navigate(['container']) 
+        this.router.navigate(['container'])
       } 
     }, err => { 
       console.log(err) 
     })
+    /*console.log('on test',this._api.postTypeRequest('user/', b))
+    this._api.getTypeRequest('user').subscribe((res: any) => { 
+      console.log(res) 
+ 
+    }, err => { 
+      console.log(err) 
+    });*/ 
     /*setInterval(() => {this.refresh()},270000)*/
   } 
 
