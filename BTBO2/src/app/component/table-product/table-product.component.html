@@ -42,7 +42,7 @@
                     </td>
                     <td>{{product.quantitySold}}</td>
                     <td>{{product.comments}}</td>  
-                    <td><button>Update</button></td>                
+                    <td><button (click)="updateAll(5, product, product.price)">Update</button></td>                
                 </ng-container>          
             </tr>      
         </table>

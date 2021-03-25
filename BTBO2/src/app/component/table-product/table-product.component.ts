@@ -36,23 +36,6 @@ export class TableProductComponent implements OnInit {
     }); 
   }
 
-  updateStock(quantityChange, product){
-    if(parseInt(quantityChange))
-    {
-      this.productsService.updateQuantity(product.id,quantityChange).subscribe(res => {
-        console.log(res);
-        this.getProducts();
-        alert("Votre modification de stock a bien été effectué.")
-      },
-      (err) => {
-        alert(err.error);
-      });
-    }else{
-      alert("Veuillez vérifier la saisie de votre promotion.");
-    }
-    
-  }
-
   updateSale(promotionChange, product, price){
     if(parseFloat(promotionChange) || (promotionChange == 0)){
       this.productsService.updateSale(product.id,promotionChange, price).subscribe(res => {
@@ -65,6 +48,12 @@ export class TableProductComponent implements OnInit {
       });
     }else{
       alert("Veuillez vérifier la saisie de votre quantité.");
+    }
+  }
+
+  updateAll(promotionChange, product, price){
+    if(promotionChange != "none"){
+      console.log(promotionChange);
     }
   }
 }
