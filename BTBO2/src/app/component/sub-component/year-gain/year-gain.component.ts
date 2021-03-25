@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
-import { dataGraph } from 'src/app/services/data-graph.model';
+import { dataGraph, totalGain } from 'src/app/services/data-graph.model';
 import { DataService } from 'src/app/services/data.service';
 
 
@@ -12,6 +12,9 @@ import { DataService } from 'src/app/services/data.service';
 export class YearGainComponent implements OnInit {
 
   sales: dataGraph;
+
+  totalgain : totalGain;
+  total : string;
 
   private data = [
     {"Framework": "Janvier", "Month": ""},
@@ -35,11 +38,11 @@ export class YearGainComponent implements OnInit {
   constructor(private dataservice: DataService) { }
 
   ngOnInit() {
-    this.getGainPerMonth("2021")
+    this.getGainPerMonthForYear("2021")
      }
 
-  getGainPerMonth(annee:string){
-    this.dataservice.getGainPerMonth(annee).subscribe(resp => {
+  getGainPerMonthForYear(annee:string){
+    this.dataservice.getGainPerMonthForYear(annee).subscribe(resp => {
         this.sales = resp.body
         for (let i = 1; i<13; i++){
         this.data[i-1].Month = this.sales.months[i].toString();
@@ -48,6 +51,12 @@ export class YearGainComponent implements OnInit {
         this.createSvg();
         this.drawBars(this.data)})    
   }
+
+  getTotalGainForYear(annee:string){
+    this.dataservice.getTotalGainForYear(annee).subscribe(resp => {
+        this.totalgain = resp.body
+        this.total = this.totalgain.totalGainPerYear.toString()
+      })}
 
   private createSvg(): void {
     this.svg = d3.select("figure#bar")
