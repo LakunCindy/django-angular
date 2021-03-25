@@ -1,1 +1,12 @@
-<p>year-gain works!</p>
+<h2>Bar Chart</h2>
+<label for="year-select">Choississez l'année:</label>
+
+<select #yearList id="year-select" [ngModel]="yearList.value" (change)='getGainPerMonth(yearList.value)'>
+    <option value="">--Veuillez choisir une année--</option>
+    <option value="2017">2017</option>
+    <option value="2018">2018</option>
+    <option value="2019">2019</option>
+    <option value="2020">2020</option>
+    <option value="2021">2021</option>
+</select>
+<figure id="bar"></figure>
