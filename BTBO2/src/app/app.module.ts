@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { NgxChartsModule }from '@swimlane/ngx-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { DetailsProductComponent } from './component/details-product/details-product.component';
 import { HomeComponent } from './component/home/home.component';
@@ -16,6 +18,7 @@ import { StatsComponent } from './component/stats/stats.component';
 import { YearGainComponent } from './component/sub-component/year-gain/year-gain.component';
 import { MonthGainComponent } from './component/sub-component/month-gain/month-gain.component';
 import { ContainerComponent } from './component/container/container.component';
+
 
 const routes: Routes = [
   {
@@ -44,6 +47,8 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    NgxChartsModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
