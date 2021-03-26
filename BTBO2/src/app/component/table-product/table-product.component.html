@@ -37,12 +37,12 @@
                             <option value="Ajouter">Ajouter</option>
                          </select>
                          <ng-container *ngIf="product.operation == 'Ajouter'">
-                            <input type="text" id="input_prix_{{product.id}}" placeholder="Prix de l'ajout" />
+                            <input (change)="updatePrixAjout($event.target.value, product)" type="text" id="input_prix_{{product.id}}" placeholder="Prix de l'ajout" />
                          </ng-container>
                     </td>
                     <td>{{product.quantitySold}}</td>
                     <td>{{product.comments}}</td>  
-                    <td><button (click)="updateStock(product.quantityChange, product, product.price, product.discount)">Update</button></td>                
+                    <td><button (click)="updateStock(product.quantityChange, product, product.price, product.discount, product.prixAjout)">Update</button></td>                
                 </ng-container>          
             </tr>      
         </table>

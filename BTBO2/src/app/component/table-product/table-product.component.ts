@@ -62,12 +62,16 @@ export class TableProductComponent implements OnInit {
     product.quantityChange = quantityChange;
   }
 
-  updateStock(quantityChange, product, price, discount){
+  updatePrixAjout(prixAjout:number, product:Product){
+    product.prixAjout = prixAjout;
+  }
+
+  updateStock(quantityChange, product, price, discount, prixAjout){
     if(parseInt(quantityChange))
     {
       if(product.operation == "Ajouter")
       {
-        this.totalPrice = price;
+        this.totalPrice = prixAjout;
         this.productsService.incrementProduct(product.id,quantityChange, this.totalPrice).subscribe(res => {
           console.log(res);
           this.getProducts();

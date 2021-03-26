@@ -13,6 +13,7 @@ export interface IProduct{
     quantitySold:number,
     operation:string,
     quantityChange:number,
+    prixAjout:number,
     owner:string,
     comments:string
 }
@@ -31,6 +32,7 @@ export class Product implements IProduct{
         public quantitySold:number,
         public operation:string,
         public quantityChange:number,
+        public prixAjout:number,
         public owner:string,
         public comments:string){
 
