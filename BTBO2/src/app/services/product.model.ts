@@ -11,6 +11,8 @@ export interface IProduct{
     unit:string,
     quantity:number,
     quantitySold:number,
+    operation:string,
+    quantityChange:number,
     owner:string,
     comments:string
 }
@@ -27,6 +29,8 @@ export class Product implements IProduct{
         public unit:string,
         public quantity:number,
         public quantitySold:number,
+        public operation:string,
+        public quantityChange:number,
         public owner:string,
         public comments:string){
 
