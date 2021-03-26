@@ -13,18 +13,38 @@ export class MonthGainComponent implements OnInit {
   sales: dataGraph;
 
   private data = [
-    {"Framework": "Janvier", "Month": ""},
-    {"Framework": "Février", "Month": ""},
-    {"Framework": "Mars", "Month": ""},
-    {"Framework": "Avril", "Month": ""},
-    {"Framework": "Mai", "Month": ""},
-    {"Framework": "Juin", "Month": ""},
-    {"Framework": "Juillet", "Month": ""},
-    {"Framework": "Aout", "Month": ""},
-    {"Framework": "Septembre", "Month": ""},
-    {"Framework": "Octobre", "Month": ""},
-    {"Framework": "Novembre", "Month": ""},
-    {"Framework": "Décembre", "Month": ""}
+    {"Framework": "1", "Day": ""},
+    {"Framework": "2", "Day": ""},
+    {"Framework": "3", "Day": ""},
+    {"Framework": "4", "Day": ""},
+    {"Framework": "5", "Day": ""},
+    {"Framework": "6", "Day": ""},
+    {"Framework": "7", "Day": ""},
+    {"Framework": "8", "Day": ""},
+    {"Framework": "9", "Day": ""},
+    {"Framework": "10", "Day": ""},
+    {"Framework": "11", "Day": ""},
+    {"Framework": "12", "Day": ""},
+    {"Framework": "13", "Day": ""},
+    {"Framework": "14", "Day": ""},
+    {"Framework": "15", "Day": ""},
+    {"Framework": "16", "Day": ""},
+    {"Framework": "17", "Day": ""},
+    {"Framework": "18", "Day": ""},
+    {"Framework": "19", "Day": ""},
+    {"Framework": "20", "Day": ""},
+    {"Framework": "21", "Day": ""},
+    {"Framework": "22", "Day": ""},
+    {"Framework": "23", "Day": ""},
+    {"Framework": "24", "Day": ""},
+    {"Framework": "25", "Day": ""},
+    {"Framework": "26", "Day": ""},
+    {"Framework": "27", "Day": ""},
+    {"Framework": "28", "Day": ""},
+    {"Framework": "29", "Day": ""},
+    {"Framework": "30", "Day": ""},
+    {"Framework": "31", "Day": ""}
+
   ];
   private svg;
   private margin = 50;
@@ -34,13 +54,19 @@ export class MonthGainComponent implements OnInit {
   constructor(private dataservice: DataService) { }
 
   ngOnInit() {
-    this.getGainPerMonth('2021')
-    this.createSvg();
-    this.drawBars(this.data);
+    this.getGainPerDayForMonth('2021','3')
   }
 
-  getGainPerMonth(annee:string){
-    this.dataservice.getGainPerMonth(annee).subscribe(resp => {console.log(this.sales = resp.body)})
+  getGainPerDayForMonth(annee:string, mois: string){
+    this.dataservice.getGainPerDayForMonth(annee, mois).subscribe(resp => {
+        this.sales = resp.body
+        for (let i = 1; i<32; i++){
+        this.data[i-1].Day = this.sales.days[i].toString();
+        }
+        console.log(this.data);
+        d3.select("svg").remove();
+        this.createSvg();
+        this.drawBars(this.data)})     
   }
 
   private createSvg(): void {
@@ -69,7 +95,7 @@ private drawBars(data: any[]): void {
 
   // Create the Y-axis band scale
   const y = d3.scaleLinear()
-  .domain([0, 200000])
+  .domain([0, 500])
   .range([this.height, 0]);
 
   // Draw the Y-axis on the DOM
@@ -82,9 +108,9 @@ private drawBars(data: any[]): void {
   .enter()
   .append("rect")
   .attr("x", d => x(d.Framework))
-  .attr("y", d => y(d.Month))
+  .attr("y", d => y(d.Day))
   .attr("width", x.bandwidth())
-  .attr("height", (d) => this.height - y(d.Month))
+  .attr("height", (d) => this.height - y(d.Day))
   .attr("fill", "#d04a35");
 }
 
