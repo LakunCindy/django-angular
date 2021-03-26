@@ -61,7 +61,7 @@ export class ProductsService {
     return this.http.get<Product>(`${this.resourceUrlApi}/removesale/${id}`, { observe: 'response' })
   }
 
-  updateSale(id:number, number:number, price:number){
+  updateSale(id:number, number:number, price:string){
     return this.http.get<Product>(`${this.resourceUrlApi}/updatesale/${id}/${number}/${price}`, { observe: 'response' })
   }
 
