@@ -108,7 +108,7 @@ export class TableProductComponent implements OnInit {
         });
       }
     }else{
-      alert("Veuillez vérifier la saisie de votre promotion.");
+      alert("Veuillez vérifier la saisie de votre quantité.");
     }
   }
 }
