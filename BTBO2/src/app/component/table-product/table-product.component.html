@@ -20,29 +20,29 @@
                     <td>
                         {{product.discount}}
                         <ng-container *ngIf="product.sale == true">
-                            <button (click)="updateSale(0, product, product.price)">-</button>
+                            <button (click)="updateSale('0%', product, product.price)">-</button>
                         </ng-container>
                     </td>
                     <td>
-                        <select id="select_pourcentage_{{product.id}}">
-                            <option *ngFor="let pourcentage of pourcentages" value="{{pourcentage}}">{{pourcentage}}</option>
+                        <select (change)="updateSale($event.target.value, product, product.price)" id="select_pourcentage_{{product.id}}">
+                            <option *ngFor="let percentage of percentages" value="{{percentage}}">{{percentage}}</option>
                         </select>
                     </td>
                     <td>
                         {{product.quantity}}
-                        <input id="input_quantity_{{product.id}}" style="width: 50px; border: 2px solid;"/>
-                        <select id="select_operation_{{product.id}}" (change)='getOperation($event.target.value)'>
+                        <input id="input_quantity_{{product.id}}" (change)="updateQuantityChange($event.target.value, product)" style="width: 50px; border: 2px solid;"/>
+                        <select id="select_operation_{{product.id}}" (change)='getOperation($event.target.value, product)'>
                             <option value="Vendu">Vendu</option>
                             <option value="Perimer">Perimer</option>
                             <option value="Ajouter">Ajouter</option>
                          </select>
-                         <ng-container>
-                            <input type="text" id="input_prix_{{product.id}}" placeholder="Prix de l'ajout" />
+                         <ng-container *ngIf="product.operation == 'Ajouter'">
+                            <input (change)="updatePrixAjout($event.target.value, product)" type="text" id="input_prix_{{product.id}}" placeholder="Prix de l'ajout" />
                          </ng-container>
                     </td>
                     <td>{{product.quantitySold}}</td>
                     <td>{{product.comments}}</td>  
-                    <td><button>Update</button></td>                
+                    <td><button (click)="updateStock(product.quantityChange, product, product.price, product.discount, product.prixAjout)">Update</button></td>                
                 </ng-container>          
             </tr>      
         </table>
@@ -71,23 +71,23 @@
                     <td>
                         {{product.discount}}
                         <ng-container *ngIf="product.sale == true">
-                            <button (click)="updateSale(0, product, product.price)">-</button>
+                            <button (click)="updateSale('0%', product, product.price)">-</button>
                         </ng-container>
                     </td>
                     <td>
-                        <select id="select_pourcentage_{{product.id}}">
-                            <option *ngFor="let pourcentage of pourcentages" value="{{pourcentage}}">{{pourcentage}}</option>
+                        <select (change)="updateSale($event.target.value, product, product.price)" id="select_pourcentage_{{product.id}}">
+                            <option *ngFor="let percentage of percentages" value="{{percentage}}">{{percentage}}</option>
                         </select>
                     </td>
                     <td>
                         {{product.quantity}}
                         <input id="input_quantity_{{product.id}}" style="width: 50px; border: 2px solid;"/>
-                        <select id="select_operation_{{product.id}}" (change)='getOperation($event.target.value)'>
+                        <select id="select_operation_{{product.id}}" (change)='getOperation($event.target.value, product)'>
                             <option value="Vendu">Vendu</option>
                             <option value="Perimer">Perimer</option>
                             <option value="Ajouter">Ajouter</option>
                          </select>
-                         <ng-container>
+                         <ng-container *ngIf="product.operation == 'Ajouter'">
                             <input type="text" id="input_prix_{{product.id}}" placeholder="Prix de l'ajout" />
                          </ng-container>
                     </td>
@@ -122,23 +122,23 @@
                     <td>
                         {{product.discount}}
                         <ng-container *ngIf="product.sale == true">
-                            <button (click)="updateSale(0, product, product.price)">-</button>
+                            <button (click)="updateSale('0%', product, product.price)">-</button>
                         </ng-container>
                     </td>
                     <td>
-                        <select id="select_pourcentage_{{product.id}}">
-                            <option *ngFor="let pourcentage of pourcentages" value="{{pourcentage}}">{{pourcentage}}</option>
+                        <select (change)="updateSale($event.target.value, product, product.price)" id="select_pourcentage_{{product.id}}">
+                            <option *ngFor="let percentage of percentages" value="{{percentage}}">{{percentage}}</option>
                         </select>
                     </td>
                     <td>
                         {{product.quantity}}
                         <input id="input_quantity_{{product.id}}" style="width: 50px; border: 2px solid;"/>
-                        <select id="select_operation_{{product.id}}" (change)='getOperation($event.target.value)'>
+                        <select id="select_operation_{{product.id}}" (change)='getOperation($event.target.value, product)'>
                             <option value="Vendu">Vendu</option>
                             <option value="Perimer">Perimer</option>
                             <option value="Ajouter">Ajouter</option>
                          </select>
-                         <ng-container>
+                         <ng-container *ngIf="product.operation == 'Ajouter'">
                             <input type="text" id="input_prix_{{product.id}}" placeholder="Prix de l'ajout" />
                          </ng-container>
                     </td>
