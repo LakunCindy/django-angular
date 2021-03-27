@@ -80,7 +80,6 @@ class IncrementStock(APIView):
         try:
             return QuantityInStock.objects.get(tigId=id)
         except QuantityInStock.DoesNotExist:
-            print('not exist')
             raise Http404
 
     def get(self,request,id,number,totalPrice,format=None):
