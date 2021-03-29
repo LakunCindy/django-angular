@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
-import { dataGraph } from 'src/app/services/data-graph.model';
+import { dataGraph } from 'src/app/services/data.model';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({

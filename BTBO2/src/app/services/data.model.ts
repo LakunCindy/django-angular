@@ -13,10 +13,23 @@ export class dataGraph implements IGraph{
             
     }
 }
+
 export interface ITotalGain{
     totalGainPerYear:number
 }
 export class totalGain implements ITotalGain{
     constructor(
         public totalGainPerYear:number){}
+}
+
+export interface IImpot{
+    impot:number
+    gain:number
+    cost:number
+}
+export class Impot implements IImpot{
+    constructor(
+        public impot:number,
+        public gain:number,
+        public cost:number){}
 }

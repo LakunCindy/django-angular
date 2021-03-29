@@ -48,9 +48,20 @@
                 <div class="card-body">
                     <figure id="bar"></figure>
                 </div>
-
                 <div class="card-footer">
-                    <p>Total des gains de l'année : {{totalgain.totalGainPerYear}} €</p>
+                    <div class="row">
+                        <div class="col">
+                            <div class="row" *ngIf="impot">
+                                <p>Impôts a payer : {{impot.impot}} €</p>
+                            </div>
+                            <div class="row" *ngIf="totalgain">
+                                <p>Total des gains de l'année : {{totalgain.totalGainPerYear}} €</p>
+                            </div>
+                            <div class="row" *ngIf="impot">
+                                <p>Total des coûts de l'année : {{impot.cost}} €</p>
+                            </div>
+                        </div>
+                    </div> 
                 </div>
             </div>
         </div>
