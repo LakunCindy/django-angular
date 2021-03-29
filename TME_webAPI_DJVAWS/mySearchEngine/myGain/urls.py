@@ -7,7 +7,7 @@ urlpatterns = [
     path('mostSale/<str:year>', views.TheMostSaleForYear.as_view()),
     path('impot/<str:year>', views.Impot.as_view()),
     path('test/', views.Test.as_view()),
-    path('allGainPerMonthForYear/<str:year>/',views.AllGainPerMonthForYear.as_view()),
-    path('allGainPerDayForAMonth/<str:year>/<str:month>',views.AllGainPerDayForAMonth.as_view())
+    path('allGainPerMonthForYear/<str:year>/<str:category>',views.AllGainPerMonthForYear.as_view()),
+    path('allGainPerDayForAMonth/<str:year>/<str:month>/<str:category>',views.AllGainPerDayForAMonth.as_view())
 
 ]

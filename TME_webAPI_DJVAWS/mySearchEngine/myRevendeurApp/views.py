@@ -80,7 +80,6 @@ class IncrementStock(APIView):
         try:
             return QuantityInStock.objects.get(tigId=id)
         except QuantityInStock.DoesNotExist:
-            print('not exist')
             raise Http404
 
     def get(self,request,id,number,totalPrice,format=None):
@@ -120,7 +119,7 @@ class DecrementStock(APIView):
         except QuantityInStock.DoesNotExist:
             return Response('id not found',status=404)
     
-    def get(self,request,id,number,totalPrice,format=None):
+    def get(self,request,id,number,totalPrice,category,format=None):
         prod_in_quantity_in_stock = self.get_object(id)
         if prod_in_quantity_in_stock:
             new_quantity = self.new_quantity(id,number)
@@ -129,7 +128,7 @@ class DecrementStock(APIView):
                 prod_in_database = response.json()
                 QuantityInStock.objects.filter(tigId=id).update(quantity = new_quantity)
                 #récupère le produit de la table myRevendeurApp_quantityInStock avec la quantité à jour pour
-                gainIsAdd = AddGain.add(id,number,totalPrice)
+                gainIsAdd = AddGain.add(id,number,totalPrice,category)
                 if gainIsAdd is True:
                     response = {}
                     response['message']='Produit mis à jour'

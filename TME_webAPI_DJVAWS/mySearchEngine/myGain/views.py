@@ -28,10 +28,18 @@ class Utilities():
             return Gain.objects.get(tigId=id)
         except Gain.DoesNotExist: 
             return False
+   
+    def category_to_int(category):
+        try:
+            new_category = int(category)
+            return True, new_category
+        except:
+            return False
+
 
 #Met à jour la table des gains lors d'une decrementation de la quantité d'un produit
 class AddGain():
-    def add(id,quantity,totalPrice):
+    def add(id,quantity,totalPrice,category):
         prod = Utilities.get_object_with_date(id)
         if prod[0] is True:
             prod = prod[1]
@@ -47,12 +55,12 @@ class AddGain():
                 return True
         elif prod[0] is False:
             if quantity >= 0 and totalPrice > 0:
-                serializer = GainSerializer(data={'tigId':str(id),'quantity':quantity,'totalPrice':totalPrice, 'created':prod[1], 'isSale':True})
+                serializer = GainSerializer(data={'tigId':str(id),'quantity':quantity,'totalPrice':totalPrice, 'created':prod[1], 'isSale':True, 'category':category})
                 if serializer.is_valid():
                     serializer.save()
                     return True
             elif quantity >= 0 and totalPrice == 0:
-                serializer = GainSerializer(data={'tigId':str(id),'quantity':quantity,'totalPrice':totalPrice, 'created':prod[1], 'isSale':False})
+                serializer = GainSerializer(data={'tigId':str(id),'quantity':quantity,'totalPrice':totalPrice, 'created':prod[1], 'isSale':False,'category':category})
                 if serializer.is_valid():
                     serializer.save()
                     return True
@@ -79,7 +87,8 @@ class TotalGainForYear(APIView):
             return Response(erreur,status=404)
 #obtenir le chiffre d'affaire par mois ainsi que le plus vendu de l'année
 class AllGainPerMonthForYear(APIView):
-    def get(self,resquest,year):
+
+    def get(self,resquest,year,category):
         prods = Gain.objects.all()
         maxQuantity = 0
         mostSaleId = 0
@@ -97,76 +106,157 @@ class AllGainPerMonthForYear(APIView):
             '11':0,
             '12':0,
         }
-        if prods:
-            for prod in prods:
-                if prod.created[:4] == str(year):
-                    date = datetime.datetime.strptime(prod.created, '%Y-%m-%d')
-                    months[str(date.month)] = months[str(date.month)] + prod.totalPrice
-                    if prod.quantity > maxQuantity:
-                            maxQuantity = prod.quantity
-                            mostSaleId = prod.tigId
-            
-            productsWithIdMostSale = Gain.objects.filter(tigId=mostSaleId).all()
-            maxQuantity = 0
-            for prod in productsWithIdMostSale:
-                if prod.created[:4] == year:
-                    maxQuantity += prod.quantity
+        category = Utilities.category_to_int(category)
+        if category:
+            if category[1] == -1:
+                if prods:
+                    for prod in prods:
+                        if prod.created[:4] == str(year):
+                            date = datetime.datetime.strptime(prod.created, '%Y-%m-%d')
+                            months[str(date.month)] = months[str(date.month)] + prod.totalPrice
+                            if prod.quantity > maxQuantity:
+                                    maxQuantity = prod.quantity
+                                    mostSaleId = prod.tigId
 
-            response = {}
-            response['months'] = months
-            response['mostSaleQuantity'] = maxQuantity
-            response['mostSale'] = mostSaleId
-            return Response(response,status=200)
+                    productsWithIdMostSale = Gain.objects.filter(tigId=mostSaleId).all()
+                    maxQuantity = 0
+                    for prod in productsWithIdMostSale:
+                        if prod.created[:4] == year:
+                            maxQuantity += prod.quantity
+
+                    response = {}
+                    response['months'] = months
+                    response['mostSaleQuantity'] = maxQuantity
+                    response['mostSale'] = mostSaleId
+                    return Response(response,status=200)
+                else:
+                    erreur = {}
+                    erreur['message'] = 'Aucunes données trouvées'
+                    return Response(erreur,status=404)
+            #si la requete demande un filtre sur une catégorie de produit
+            elif category[1] == 0 or category[1] == 1 or category[1] == 2:
+                if prods:
+                    for prod in prods:
+                        if prod.created[:4] == str(year) and  prod.category == category[1]:
+                            date = datetime.datetime.strptime(prod.created, '%Y-%m-%d')
+                            months[str(date.month)] = months[str(date.month)] + prod.totalPrice
+                            if prod.quantity > maxQuantity:
+                                maxQuantity = prod.quantity
+                                mostSaleId = prod.tigId
+                
+                    productsWithIdMostSale = Gain.objects.filter(tigId=mostSaleId).all()
+                    maxQuantity = 0
+                    for prod in productsWithIdMostSale:
+                        if prod.created[:4] == year:
+                            maxQuantity += prod.quantity
+
+                    response = {}
+                    response['months'] = months
+                    response['mostSaleQuantity'] = maxQuantity
+                    response['mostSale'] = mostSaleId
+                    return Response(response,status=200)
+                else:
+                    erreur = {}
+                    erreur['message'] = 'Aucunes données trouvées'
+                    return Response(erreur,status=404)
+
+            else:
+                erreur = {}
+                erreur['message'] = "La categorie n'existe pas"
+                return Response(erreur,status=404)
         else:
             erreur = {}
-            erreur['message'] = 'Aucunes données trouvées'
+            erreur['message'] = "Veuillez vérifier la catégorie saisie"
             return Response(erreur,status=404)
+
+
 
 #obtenir le chiffre d'affaire par jour pour un mois donné ainsi que le plus vendu du mois
 class AllGainPerDayForAMonth(APIView):
-    def generateMonth(TheMostSaleForYear):
+    def generateMonth(self):
         days = {}
         for i in range(1,32):
             days[str(i)] = 0
         return days
 
-    def get(self,request,year,month):
+    def get(self,request,year,month,category):
         days = self.generateMonth()
         prods = Gain.objects.all()
         mostSaleId = 0
         maxQuantity = 0
+        category = Utilities.category_to_int(category)
 
-        if prods:
-            for prod in prods:
-                if prod.created[:4] == year:
-                    date = datetime.datetime.strptime(prod.created,'%Y-%m-%d')
-                    monthProd = date.month
-                    dayProd = date.day
-                    if str(monthProd) == month:
-                        days[str(dayProd)] = days[str(dayProd)] + prod.totalPrice
-                        if prod.quantity > maxQuantity:
-                            maxQuantity = prod.quantity
-                            mostSaleId = prod.tigId
-            
-            productsWithIdMostSale = Gain.objects.filter(tigId=mostSaleId).all()
-            maxQuantity = 0
-            for prod in productsWithIdMostSale:
-                    if prod.created[:4] == year:
-                        date = datetime.datetime.strptime(prod.created,'%Y-%m-%d')
-                        monthProd = date.month
-                        if str(monthProd) == month:
-                            maxQuantity += prod.quantity
+        if category:
+            if category[1] == -1:
+                if prods:
+                    for prod in prods:
+                        if prod.created[:4] == year:
+                            date = datetime.datetime.strptime(prod.created,'%Y-%m-%d')
+                            monthProd = date.month
+                            dayProd = date.day
+                            if str(monthProd) == month:
+                                days[str(dayProd)] = days[str(dayProd)] + prod.totalPrice
+                                if prod.quantity > maxQuantity:
+                                    maxQuantity = prod.quantity
+                                    mostSaleId = prod.tigId
+                    
+                    productsWithIdMostSale = Gain.objects.filter(tigId=mostSaleId).all()
+                    maxQuantity = 0
+                    for prod in productsWithIdMostSale:
+                            if prod.created[:4] == year:
+                                date = datetime.datetime.strptime(prod.created,'%Y-%m-%d')
+                                monthProd = date.month
+                                if str(monthProd) == month:
+                                    maxQuantity += prod.quantity
 
-            response = {}
-            response['days'] = days
-            response['mostSaleQuantity'] = maxQuantity
-            response['mostSale'] = mostSaleId
-            return Response(response,status=200)
+                    response = {}
+                    response['days'] = days
+                    response['mostSaleQuantity'] = maxQuantity
+                    response['mostSale'] = mostSaleId
+                    return Response(response,status=200)
+                else:
+                    erreur = {}
+                    erreur['message'] = 'Aucunes données trouvées'
+                    return Response(erreur,status=404)
+            elif category[1] == 0 or category[1] == 1 or category[1] == 2:
+                if prods:
+                    for prod in prods:
+                        if prod.created[:4] == str(year) and prod.category == category[1]:
+                            date = datetime.datetime.strptime(prod.created,'%Y-%m-%d')
+                            monthProd = date.month
+                            dayProd = date.day
+                            if str(monthProd) == month:
+                                days[str(dayProd)] = days[str(dayProd)] + prod.totalPrice
+                                if prod.quantity > maxQuantity:
+                                    maxQuantity = prod.quantity
+                                    mostSaleId = prod.tigId
+                    
+                    productsWithIdMostSale = Gain.objects.filter(tigId=mostSaleId).all()
+                    maxQuantity = 0
+                    for prod in productsWithIdMostSale:
+                            if prod.created[:4] == year:
+                                date = datetime.datetime.strptime(prod.created,'%Y-%m-%d')
+                                monthProd = date.month
+                                if str(monthProd) == month:
+                                    maxQuantity += prod.quantity
+
+                    response = {}
+                    response['days'] = days
+                    response['mostSaleQuantity'] = maxQuantity
+                    response['mostSale'] = mostSaleId
+                    return Response(response,status=200)
+                else:
+                    erreur = {}
+                    erreur['message'] = 'Aucunes données trouvées'
+                    return Response(erreur,status=404)
+            else:
+                erreur = {}
+                erreur['message'] = "La categorie n'existe pas"
+                return Response(erreur,status=404)
         else:
             erreur = {}
-            erreur['message'] = 'Aucunes données trouvées'
+            erreur['message'] = "Veuillez vérifier la catégorie saisie"
             return Response(erreur,status=404)
-
 
 class Test(APIView):
 
@@ -247,6 +337,7 @@ class Impot(APIView):
             response['total'] = total
             return Response(response,status=200)
 
+#retourne le nombre d'article vendu pour un id donnée
 class NumberArticleSale():
 
     def get(id):

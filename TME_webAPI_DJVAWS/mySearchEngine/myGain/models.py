@@ -7,6 +7,7 @@ class Gain(models.Model):
     quantity = models.IntegerField(default='0')
     totalPrice = models.IntegerField(default='0')
     isSale = models.BooleanField(default=False)
+    category = models.IntegerField(default=-1)
 
     class Meta:
-        ordering = ('created','tigId','quantity','totalPrice','isSale',)
+        ordering = ('created','tigId','quantity','totalPrice','isSale','category')
