@@ -39,7 +39,7 @@ class Utilities():
 
 #Met à jour la table des gains lors d'une decrementation de la quantité d'un produit
 class AddGain():
-    def add(id,quantity,totalPrice):
+    def add(id,quantity,totalPrice,category):
         prod = Utilities.get_object_with_date(id)
         if prod[0] is True:
             prod = prod[1]
@@ -55,12 +55,12 @@ class AddGain():
                 return True
         elif prod[0] is False:
             if quantity >= 0 and totalPrice > 0:
-                serializer = GainSerializer(data={'tigId':str(id),'quantity':quantity,'totalPrice':totalPrice, 'created':prod[1], 'isSale':True})
+                serializer = GainSerializer(data={'tigId':str(id),'quantity':quantity,'totalPrice':totalPrice, 'created':prod[1], 'isSale':True, 'category':category})
                 if serializer.is_valid():
                     serializer.save()
                     return True
             elif quantity >= 0 and totalPrice == 0:
-                serializer = GainSerializer(data={'tigId':str(id),'quantity':quantity,'totalPrice':totalPrice, 'created':prod[1], 'isSale':False})
+                serializer = GainSerializer(data={'tigId':str(id),'quantity':quantity,'totalPrice':totalPrice, 'created':prod[1], 'isSale':False,'category':category})
                 if serializer.is_valid():
                     serializer.save()
                     return True
