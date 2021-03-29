@@ -1,28 +1,59 @@
-<h2>Bar Chart</h2>
-<label for="month-select">Choississez le mois:</label>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="row">
+            <h2><h2>Statistiques du mois</h2></h2>
+        </div>
+        
+        <div class="row">
+            <label for="month-select">Choississez l'année:</label>
 
-<select #yearList id="year-select" [ngModel]="yearList.value">
-    <option value="">--Veuillez choisir une année--</option>
-    <option value="2017">2017</option>
-    <option value="2018">2018</option>
-    <option value="2019">2019</option>
-    <option value="2020">2020</option>
-    <option value="2021">2021</option>
-</select>
-<select #monthList id="month-select" [ngModel]="monthList.value">
-    <option value="">--Veuillez choisir un mois--</option>
-    <option value="1">Janvier</option>
-    <option value="2">Février</option>
-    <option value="3">Mars</option>
-    <option value="4">Avril</option>
-    <option value="5">Mai</option>
-    <option value="6">Juin</option>
-    <option value="7">Juillet</option>
-    <option value="8">Aout</option>
-    <option value="9">Septembre</option>
-    <option value="10">Octobre</option>
-    <option value="11">Novembre</option>
-    <option value="12">Décembre</option>
-</select>
-<button type="button" class="btn btn-primary" (click)='getGainPerDayForMonth(yearList.value,monthList.value)'>OK</button>
-<figure id="bar"></figure>
+            <select #yearList id="year-select" [ngModel]="yearList.value">
+                <option value="">--Veuillez choisir une année--</option>
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+            </select>
+
+        </div>
+        <div class="row">
+           <label for="month-select">Choississez l'année:</label>
+
+            <select #monthList id="month-select" [ngModel]="monthList.value">
+                <option value="">--Veuillez choisir un mois--</option>
+                <option value="1">Janvier</option>
+                <option value="2">Février</option>
+                <option value="3">Mars</option>
+                <option value="4">Avril</option>
+                <option value="5">Mai</option>
+                <option value="6">Juin</option>
+                <option value="7">Juillet</option>
+                <option value="8">Aout</option>
+                <option value="9">Septembre</option>
+                <option value="10">Octobre</option>
+                <option value="11">Novembre</option>
+                <option value="12">Décembre</option>
+            </select>
+        </div>
+
+        <div class="row">
+            <label for="year-select">Choississez la catégorie de produits:</label>
+
+            <select #categoryList id="category-select" [ngModel]="categoryList.value">
+                <option value="">--Veuillez choisir une catégorie--</option>
+                <option value="-1">Tous</option>
+                <option value="0">Poisson</option>
+                <option value="1">Crustacé</option>
+                <option value="2">Coquillage</option>
+            </select>
+        </div>
+
+        <div class="row">
+            <button type="button" class="btn btn-primary" (click)='getGainPerDayForMonth(yearList.value,monthList.value,categoryList.value)'>OK</button>
+        </div>
+        <div class="row">
+            <figure id="bar"></figure>
+        </div>
+    </div>
+</div>

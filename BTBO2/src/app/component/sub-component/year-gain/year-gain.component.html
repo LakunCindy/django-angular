@@ -1,4 +1,4 @@
-<h2>Bar Chart</h2>
+<h2>Statistiques de l'année</h2>
 <label for="year-select">Choississez l'année:</label>
 
 <select #yearList id="year-select" [ngModel]="yearList.value">
@@ -9,6 +9,8 @@
     <option value="2020">2020</option>
     <option value="2021">2021</option>
 </select>
+
+<label for="year-select">Choississez la catégorie de produits:</label>
 
 <select #categoryList id="category-select" [ngModel]="categoryList.value">
     <option value="">--Veuillez choisir une catégorie--</option>
