@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { IProduct, Product } from '../services/product.model';
 import { Observable } from 'rxjs';
-import { SERVER_API } from '../app.contants'
 
 type EntityResponseType = HttpResponse<Product>;
 type EntityResponseTypeArray = HttpResponse<Product[]>;
@@ -25,7 +24,7 @@ export class ProductsService {
     return this.http.get<Product>(`${this.resourceUrlApi}/incrementStock/${id}/${number}/${totalPrice}`, { observe: 'response' })
   }
 
-  decrementProduct(id: number, number: number, totalPrice:number): Observable<EntityResponseType> {
+  decrementProduct(id: number, number: number, totalPrice:number, category:string): Observable<EntityResponseType> {
     return this.http.get<Product>(`${this.resourceUrlApi}/decrementStock/${id}/${number}/${totalPrice}`, { observe: 'response' })
   }
 
