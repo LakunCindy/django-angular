@@ -67,6 +67,12 @@ export class YearGainComponent implements OnInit {
     })
   }
 
+  FunctionArray(annee:string, category:string) {
+    this.getGainPerMonthForYear(annee, category)
+    this.getTotalGainForYear(annee)
+    this.Impot(annee);{}
+  }
+
   private createSvg(): void {
     this.svg = d3.select("figure#bar")
     .append("svg")
