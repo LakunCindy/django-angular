@@ -64,7 +64,8 @@ export class DetailsProductComponent implements OnInit {
     }
   }
 
-  updateStock(quantityChange, product, price, discount){
+  updateStock(quantityChange, product, price, discount, category){
+    let category_product = category.toString()
     if(parseInt(quantityChange))
     {
       if(this.operation == "Ajouter")
@@ -86,7 +87,7 @@ export class DetailsProductComponent implements OnInit {
         else{
           this.totalPrice = price * quantityChange;
         }
-        this.productsService.decrementProduct(product.id,quantityChange, this.totalPrice).subscribe(res => {
+        this.productsService.decrementProduct(product.id,quantityChange, this.totalPrice, category_product).subscribe(res => {
           console.log(res);
           this.getProductId(product.id);
           alert("Votre modification de stock a bien été effectué.")
@@ -96,7 +97,7 @@ export class DetailsProductComponent implements OnInit {
         });
       }
       else{
-        this.productsService.decrementProduct(product.id,quantityChange, 0).subscribe(res => {
+        this.productsService.decrementProduct(product.id,quantityChange, 0, category_product).subscribe(res => {
           console.log(res);
           this.getProductId(product.id);
           alert("Votre modification de stock a bien été effectué.")

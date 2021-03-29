@@ -88,7 +88,7 @@
                          <ng-container *ngIf="product.operation == 'Ajouter'">
                             <input (change)="updatePrixAjout($event.target.value, product)" type="text" id="input_prix_{{product.id}}" placeholder="Prix de l'ajout" />
                          </ng-container>
-                         <button (click)="updateStock(product.quantityChange, product, product.price, product.discount, product.prixAjout, product.category))">Modifier</button>
+                         <button (click)="updateStock(product.quantityChange, product, product.price, product.discount, product.prixAjout, product.category)">Modifier</button>
                     </td>
                     <td>{{product.quantitySold}}</td>
                     <td>{{product.comments}}</td>  
@@ -138,7 +138,7 @@
                          <ng-container *ngIf="product.operation == 'Ajouter'">
                             <input (change)="updatePrixAjout($event.target.value, product)" type="text" id="input_prix_{{product.id}}" placeholder="Prix de l'ajout" />
                          </ng-container>
-                         <button (click)="updateStock(product.quantityChange, product, product.price, product.discount, product.prixAjout, product.category))">Modifier</button>
+                         <button (click)="updateStock(product.quantityChange, product, product.price, product.discount, product.prixAjout, product.category)">Modifier</button>
                     </td>
                     <td>{{product.quantitySold}}</td>
                     <td>{{product.comments}}</td>

@@ -25,7 +25,7 @@ export class ProductsService {
   }
 
   decrementProduct(id: number, number: number, totalPrice:number, category:string): Observable<EntityResponseType> {
-    return this.http.get<Product>(`${this.resourceUrlApi}/decrementStock/${id}/${number}/${totalPrice}`, { observe: 'response' })
+    return this.http.get<Product>(`${this.resourceUrlApi}/decrementStock/${id}/${number}/${totalPrice}/${category}`, { observe: 'response' })
   }
 
   updateQuantity(id: number, number: number): Observable<EntityResponseType> {
