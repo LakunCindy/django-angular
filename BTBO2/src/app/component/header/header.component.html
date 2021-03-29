@@ -2,5 +2,13 @@
     <a routerLink="home" routerLinkActive="active">Home</a>
     <a routerLink="detailsProduct" routerLinkActive="active">Détails d'un produit</a>
     <a routerLink="tableProduct" routerLinkActive="active">Détails de tous les produits</a>
-    <a routerLink="stats" routerLinkActive="active">Statistiques</a>
+    <div class="dropdown">
+        <button class="dropbtn">Statistiques
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+        <a routerLink="stats/yeargain">Par année</a>
+        <a routerLink="stats/monthgain">Par mois</a>
+        </div>
+    </div>
 </div>
