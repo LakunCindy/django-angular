@@ -14,7 +14,6 @@ export class YearGainComponent implements OnInit {
   sales: dataGraph;
 
   totalgain : totalGain;
-  total : string;
 
   private data = [
     {"Framework": "Janvier", "Month": ""},
@@ -39,6 +38,7 @@ export class YearGainComponent implements OnInit {
 
   ngOnInit() {
     this.getGainPerMonthForYear('2021','-1')
+    this.getTotalGainForYear('2021')
      }
 
   getGainPerMonthForYear(annee:string, category:string){
@@ -55,8 +55,6 @@ export class YearGainComponent implements OnInit {
   getTotalGainForYear(annee:string){
     this.dataservice.getTotalGainForYear(annee).subscribe(resp => {
         this.totalgain = resp.body
-        this.total = this.totalgain.totalGainPerYear.toString()
-        console.log(this.totalgain)
       })}
 
   private createSvg(): void {

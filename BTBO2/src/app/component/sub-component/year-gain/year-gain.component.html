@@ -1,7 +1,7 @@
 <h2>Bar Chart</h2>
 <label for="year-select">Choississez l'année:</label>
 
-<select #yearList id="year-select" [ngModel]="yearList.value" (change)='getGainPerMonthForYear(yearList.value)'>
+<select #yearList id="year-select" [ngModel]="yearList.value">
     <option value="">--Veuillez choisir une année--</option>
     <option value="2017">2017</option>
     <option value="2018">2018</option>
@@ -9,6 +9,16 @@
     <option value="2020">2020</option>
     <option value="2021">2021</option>
 </select>
+
+<select #categoryList id="category-select" [ngModel]="categoryList.value">
+    <option value="">--Veuillez choisir une catégorie--</option>
+    <option value="-1">Tous</option>
+    <option value="0">Poisson</option>
+    <option value="1">Crustacé</option>
+    <option value="2">Coquillage</option>
+</select>
+
+<button type="button" class="btn btn-primary" (click)='getGainPerMonthForYear(yearList.value,categoryList.value)'>OK</button>
 <figure id="bar"></figure>
 
-<p>Total : {{total}}</p>
+<p>Total : {{totalgain.totalGainPerYear}}</p>
