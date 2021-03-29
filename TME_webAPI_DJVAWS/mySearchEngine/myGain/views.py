@@ -44,6 +44,7 @@ class AddGain():
         if prod[0] is True:
             prod = prod[1]
             if quantity >= 0 and totalPrice >= 0:
+                prod.category = category
                 prod.quantity = prod.quantity + quantity 
                 if totalPrice == 0:
                     prod.totalPrice = prod.totalPrice + 0
