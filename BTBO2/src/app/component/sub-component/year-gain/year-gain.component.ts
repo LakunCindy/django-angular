@@ -31,8 +31,8 @@ export class YearGainComponent implements OnInit {
   ];
   private svg;
   private margin = 50;
-  private width = 750 - (this.margin * 2);
-  private height = 400 - (this.margin * 2);
+  private width = 1000 - (this.margin * 2);
+  private height = 500 - (this.margin * 2);
 
   constructor(private dataservice: DataService) { }
 
@@ -79,7 +79,8 @@ private drawBars(data: any[]): void {
   .call(d3.axisBottom(x))
   .selectAll("text")
   .attr("transform", "translate(-10,0)rotate(-45)")
-  .style("text-anchor", "end");
+  .style("text-anchor", "end")
+  .style("font", "15px arial");
 
   // Create the Y-axis band scale
   const y = d3.scaleLinear()
@@ -88,7 +89,8 @@ private drawBars(data: any[]): void {
 
   // Draw the Y-axis on the DOM
   this.svg.append("g")
-  .call(d3.axisLeft(y));
+  .call(d3.axisLeft(y))
+  .style("font", "15px arial");
 
   // Create and fill the bars
   this.svg.selectAll("bars")

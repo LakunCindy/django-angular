@@ -16,10 +16,11 @@
     font-size: 30px;
 }
 
+.card-footer {
+    text-align: center;
+}
+
 .btn-primary {
-    margin-left:10px;
-    margin-right:10px;
-    margin-bottom:10px;
     background-color: #fe881c;
     border-color: #fe881c;
 }
