@@ -72,20 +72,43 @@ class TotalGainForYear(APIView):
 
     def get(self,request,year):
         prods = Gain.objects.all()
-        totalGainPerYear = 0
+        totalGainForYear = 0
         if prods:
             for prod in prods:
                 if prod.created[:4] == year:
-                    totalGainPerYear += prod.totalPrice
+                    totalGainForYear += prod.totalPrice
                 
             response = {}
             response['message']= 'Le chiffre total est :'
-            response['totalGainPerYear']= totalGainPerYear
+            response['totalGainPerYear']= totalGainForYear
             return Response(response,status=200)
         else:
             erreur = {}
             erreur['message'] = 'Aucunes données trouvées'
             return Response(erreur,status=404)
+
+class TotalGainForMonth(APIView):
+
+    def get(self,request,year,month):
+        prods = Gain.objects.all()
+        totalGainForMonth = 0
+        if prods:
+            for prod in prods:
+                if prod.created[:4] == year:
+                    date = datetime.datetime.strptime(prod.created, '%Y-%m-%d')
+                    if str(date.month) == month:
+                        totalGainForMonth += prod.totalPrice
+
+            response = {}
+            response['message']= 'Le chiffre total est :'
+            response['totalGainPerMonth']= totalGainForMonth
+            return Response(response,status=200)
+        else:
+            erreur = {}
+            erreur['message'] = 'Aucunes données trouvées'
+            return Response(erreur,status=404)
+
+
 #obtenir le chiffre d'affaire par mois ainsi que le plus vendu de l'année
 class AllGainPerMonthForYear(APIView):
 
@@ -169,8 +192,6 @@ class AllGainPerMonthForYear(APIView):
             erreur = {}
             erreur['message'] = "Veuillez vérifier la catégorie saisie"
             return Response(erreur,status=404)
-
-
 
 #obtenir le chiffre d'affaire par jour pour un mois donné ainsi que le plus vendu du mois
 class AllGainPerDayForAMonth(APIView):
@@ -265,7 +286,7 @@ class Test(APIView):
         prods = Gain.objects.all()
 
         response = {}
-        response['mouth']= prods[0].created[8:]
+        response['mouth']= prods[0].created[5:7]
         return Response(response,status=200)
 
 #n'est plus utilisé : renvoie le plus vendu de l'année
