@@ -54,11 +54,11 @@ export class MonthGainComponent implements OnInit {
   constructor(private dataservice: DataService) { }
 
   ngOnInit() {
-    this.getGainPerDayForMonth('2021','3')
+    this.getGainPerDayForMonth('2021','3','-1')
   }
 
-  getGainPerDayForMonth(annee:string, mois: string){
-    this.dataservice.getGainPerDayForMonth(annee, mois).subscribe(resp => {
+  getGainPerDayForMonth(annee:string, mois: string, category:string){
+    this.dataservice.getGainPerDayForMonth(annee, mois,category).subscribe(resp => {
         this.sales = resp.body
         for (let i = 1; i<32; i++){
         this.data[i-1].Day = this.sales.days[i].toString();

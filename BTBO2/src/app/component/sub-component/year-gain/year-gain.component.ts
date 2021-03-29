@@ -38,11 +38,11 @@ export class YearGainComponent implements OnInit {
   constructor(private dataservice: DataService) { }
 
   ngOnInit() {
-    this.getGainPerMonthForYear("2021")
+    this.getGainPerMonthForYear('2021','-1')
      }
 
-  getGainPerMonthForYear(annee:string){
-    this.dataservice.getGainPerMonthForYear(annee).subscribe(resp => {
+  getGainPerMonthForYear(annee:string, category:string){
+    this.dataservice.getGainPerMonthForYear(annee,category).subscribe(resp => {
         this.sales = resp.body
         for (let i = 1; i<13; i++){
         this.data[i-1].Month = this.sales.months[i].toString();
@@ -56,6 +56,7 @@ export class YearGainComponent implements OnInit {
     this.dataservice.getTotalGainForYear(annee).subscribe(resp => {
         this.totalgain = resp.body
         this.total = this.totalgain.totalGainPerYear.toString()
+        console.log(this.totalgain)
       })}
 
   private createSvg(): void {
