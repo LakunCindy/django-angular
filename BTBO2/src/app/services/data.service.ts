@@ -15,9 +15,9 @@ export class DataService {
 
   constructor(protected http: HttpClient) { }
 
-  getGainPerMonthForYear(annee:string): Observable<EntityResponseType_dataGraph> { 
+  getGainPerMonthForYear(annee:string, category:string): Observable<EntityResponseType_dataGraph> { 
     return this.http.get<dataGraph>
-    (`${this.resourceUrlApi}/allGainPerMonthForYear/${annee}`,
+    (`${this.resourceUrlApi}/allGainPerMonthForYear/${annee}/${category}`,
      { observe: 'response' })
    }
 
@@ -27,9 +27,9 @@ export class DataService {
      { observe: 'response' })
    }
 
-   getGainPerDayForMonth(annee:string, mois:string): Observable<EntityResponseType_dataGraph>{
+  getGainPerDayForMonth(annee:string, mois:string, category:string): Observable<EntityResponseType_dataGraph>{
     return this.http.get<dataGraph>
-    (`${this.resourceUrlApi}/allGainPerDayForAMonth/${annee}/${mois}`,
+    (`${this.resourceUrlApi}/allGainPerDayForAMonth/${annee}/${mois}/${category}`,
      { observe: 'response' })
   }
 
