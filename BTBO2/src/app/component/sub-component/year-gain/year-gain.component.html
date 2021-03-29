@@ -54,6 +54,9 @@
                             <div class="row" *ngIf="impot">
                                 <p>Impôts a payer : {{impot.impot}} €</p>
                             </div>
+                            <div class="row" *ngIf="!impot">
+                                <p>Pas d'impôts a payer</p>
+                            </div>
                             <div class="row" *ngIf="totalgain">
                                 <p>Total des gains de l'année : {{totalgain.totalGainPerYear}} €</p>
                             </div>

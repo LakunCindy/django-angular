@@ -1,0 +1,16 @@
+.card {
+    margin-top: 10px;
+}
+
+.card-body {
+    font-size: 20px;
+}
+
+.card-footer {
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #fe881c;
+    border-color: #fe881c;
+}

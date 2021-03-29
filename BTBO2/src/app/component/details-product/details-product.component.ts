@@ -123,6 +123,6 @@ export class DetailsProductComponent implements OnInit {
     }else{
       alert("Veuillez vérifier la saisie de votre quantité.");
     }
-    
   }
 }
+
