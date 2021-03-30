@@ -9,7 +9,7 @@
                <div class="card-body">
                   <div id="infosProduct" *ngIf="products">
                      <div class="row">
-                        <label for="month-select">Choississez l'année:</label>
+                        <label for="month-select">Selectionnez un produit:</label>
                         <select #productList [ngModel]="productList.value" (change)='getProductId(productList.value)'>
                            <option *ngFor="let product of products" [value]="product.id" >{{product.name}}</option>
                         </select> 
@@ -43,24 +43,16 @@
                                  <option value="Ajouter">Ajouter</option>
                               </select>
 
-<<<<<<< HEAD
-               <select (change)='getOperation($event.target.value)'>
-                  <option value="Vendu">Vendu</option>
-                  <option value="Perimer">Perimer</option>
-                  <option value="Ajouter">Ajouter</option>
-               </select>
-
-               <ng-container *ngIf="afficherPrixAjout == true">
-                  <input type="text" required [(ngModel)]="prixAjout" placeholder="Prix de l'ajout" />
-               </ng-container>
+                              <ng-container *ngIf="afficherPrixAjout == true">
+                                 <input type="text" required [(ngModel)]="prixAjout" placeholder="Prix de l'ajout" />
+                              </ng-container>
                
-               <button (click)="updateStock(quantityChange, product, product.price, product.discount, product.category)">Valider</button>
-=======
+                              <button (click)="updateStock(quantityChange, product, product.price, product.discount, product.category)">Valider</button>
+
                               <ng-container *ngIf="afficherPrixAjout == true">
                                  <input type="text" required [(ngModel)]="prixAjout" placeholder="Prix de l'ajout" />
                               </ng-container>
                               
-                              <button>Valider</button>
                            </div>
                         </div>        
                      <div class="row">
@@ -83,7 +75,6 @@
                         <button class="btn btn-primary" (click)="updateSale(0, product, product.price)" *ngIf="product.discount">Retirer promotion</button>
                      </div>
                </div>
->>>>>>> 7cb7f07702a3b4226cf6cb549ba1907fb616f790
             </div>
          </div>
       </div>
