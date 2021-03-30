@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
-import { dataGraph } from 'src/app/services/data-graph.model';
+import { dataGraph } from 'src/app/services/data.model';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -91,7 +91,8 @@ private drawBars(data: any[]): void {
   .call(d3.axisBottom(x))
   .selectAll("text")
   .attr("transform", "translate(-10,0)rotate(-45)")
-  .style("text-anchor", "end");
+  .style("text-anchor", "end")
+  .style("font", "15px arial");
 
   // Create the Y-axis band scale
   const y = d3.scaleLinear()
@@ -100,7 +101,8 @@ private drawBars(data: any[]): void {
 
   // Draw the Y-axis on the DOM
   this.svg.append("g")
-  .call(d3.axisLeft(y));
+  .call(d3.axisLeft(y))
+  .style("font", "15px arial");
 
   // Create and fill the bars
   this.svg.selectAll("bars")

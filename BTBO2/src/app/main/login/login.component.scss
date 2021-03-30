@@ -1,0 +1,40 @@
+/* Alignement vertical & horizontal de la card de connexion */
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+/* card de connexion */
+.card {
+    width: 40%;
+    margin: auto;
+}
+
+/* Haut de la card de connexion */
+.card-header {
+    text-align: center;
+}
+
+/* Corps de la card de connexion */
+.card-body {
+    text-align: center;
+}
+
+/* Alignement des labels a gauche */
+.col-sm-4 {
+    text-align: left;
+}
+
+/* Champs de connexion */
+.input, label {
+   padding: 5px; 
+}
+
+/* Bas de la card de connexion */
+.card-footer {
+    text-align: center;
+}

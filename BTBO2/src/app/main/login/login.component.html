@@ -1,13 +1,37 @@
-<div> 
-    <form [formGroup]='form' (ngSubmit)='login()'> 
-        <label>Username</label> 
-        <input type='text' formControlName='username' /> 
-        <label>Password</label> 
-        <input type='password' formControlName='password' /> 
-        <div> 
-            <button type='submit' [disabled]='!this.form.valid'> 
-                Login 
-            </button> 
-        </div> 
-    </form>
+<!--Component de connexion-->
+<!--div contenant les éléments de la page de connexion-->
+<div class="container">
+    <!--Grid-->
+    <div class="row">
+        <div class="col-sm-12">
+            <!--Card de connexion-->
+            <div class="card">
+                <form [formGroup]='form' (ngSubmit)='login()'> 
+                    <!--Top de la Card-->
+                    <div class="card-header">
+                        <h1>Login</h1>
+                    </div>
+                    <!--Corps de la card-->
+                    <div class="card-body">
+                        <!--Alignement Labels & Inputs-->
+                        <div class="row">
+                            <div class="col-sm-4"><label for="text">Identifiant</label></div>
+                            <div class="col-sm-8"><input type='text' formControlName='username' /> </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4"><label for="password">Mot de passe</label></div>
+                            <div class="col-sm-8"><input type='password' formControlName='password' /> </div>
+                        </div>
+                    </div>
+                    <!--Bas de la Card-->
+                    <div class="card-footer">
+                        <button type='submit' [disabled]='!this.form.valid'> 
+                            Login 
+                        </button> 
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+<div> 

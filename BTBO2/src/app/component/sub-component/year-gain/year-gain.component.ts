@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
-import { dataGraph, totalGain } from 'src/app/services/data-graph.model';
+import { dataGraph, Impot, totalGain } from 'src/app/services/data.model';
 import { DataService } from 'src/app/services/data.service';
 
 
@@ -12,9 +12,9 @@ import { DataService } from 'src/app/services/data.service';
 export class YearGainComponent implements OnInit {
 
   sales: dataGraph;
-
   totalgain : totalGain;
-  total : string;
+  impot : Impot;
+  currentYear : number = new Date().getFullYear();
 
   private data = [
     {"Framework": "Janvier", "Month": ""},
@@ -32,14 +32,16 @@ export class YearGainComponent implements OnInit {
   ];
   private svg;
   private margin = 50;
-  private width = 750 - (this.margin * 2);
-  private height = 400 - (this.margin * 2);
+  private width = 1000 - (this.margin * 2);
+  private height = 500 - (this.margin * 2);
 
   constructor(private dataservice: DataService) { }
 
   ngOnInit() {
     this.getGainPerMonthForYear('2021','-1')
-     }
+    this.getTotalGainForYear('2021')
+    this.Impot(this.currentYear.toString())
+    }
 
   getGainPerMonthForYear(annee:string, category:string){
     this.dataservice.getGainPerMonthForYear(annee,category).subscribe(resp => {
@@ -55,9 +57,21 @@ export class YearGainComponent implements OnInit {
   getTotalGainForYear(annee:string){
     this.dataservice.getTotalGainForYear(annee).subscribe(resp => {
         this.totalgain = resp.body
-        this.total = this.totalgain.totalGainPerYear.toString()
-        console.log(this.totalgain)
-      })}
+      })
+  }
+
+  Impot(annee:string){
+    this.dataservice.Impot(annee).subscribe(resp => {
+      this.impot = resp.body
+      console.log(this.impot)
+    })
+  }
+
+  FunctionArray(annee:string, category:string) {
+    this.getGainPerMonthForYear(annee, category)
+    this.getTotalGainForYear(annee)
+    this.Impot(annee);{}
+  }
 
   private createSvg(): void {
     this.svg = d3.select("figure#bar")
@@ -81,7 +95,8 @@ private drawBars(data: any[]): void {
   .call(d3.axisBottom(x))
   .selectAll("text")
   .attr("transform", "translate(-10,0)rotate(-45)")
-  .style("text-anchor", "end");
+  .style("text-anchor", "end")
+  .style("font", "15px arial");
 
   // Create the Y-axis band scale
   const y = d3.scaleLinear()
@@ -90,7 +105,8 @@ private drawBars(data: any[]): void {
 
   // Draw the Y-axis on the DOM
   this.svg.append("g")
-  .call(d3.axisLeft(y));
+  .call(d3.axisLeft(y))
+  .style("font", "15px arial");
 
   // Create and fill the bars
   this.svg.selectAll("bars")

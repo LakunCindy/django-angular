@@ -1,36 +1,49 @@
-<div id="infosProduct" *ngIf="products">
-    <h1>Page d'affichage du produit</h1>
-    <select #productList [ngModel]="productList.value" (change)='getProductId(productList.value)'>
-        <option *ngFor="let product of products" [value]="product.id" >{{product.name}}</option>
-    </select> 
+<div class="container">
+   <div class="row">
+       <div class="col">
+         <div class="col-sm-12">
+            <div class="card">
+               <div class="card-header">
+                  <h1>Gestion d'un produit</h1>
+               </div>
+               <div class="card-body">
+                  <div id="infosProduct" *ngIf="products">
+                     <div class="row">
+                        <label for="month-select">Choississez l'année:</label>
+                        <select #productList [ngModel]="productList.value" (change)='getProductId(productList.value)'>
+                           <option *ngFor="let product of products" [value]="product.id" >{{product.name}}</option>
+                        </select> 
+                     </div>
 
-    <ul *ngIf="product">
-        <li>
-           Id : {{product.id}}
-        </li>
-        <li>
-           Nom : {{product.name}}
-        </li>
-        <li>
-           Prix : {{product.price}}
-        </li>
-        <li>
-            <ng-container *ngIf="product.sale == true">
-               Prix en promotion : {{product.discount}}
-            </ng-container>
-            <button (click)="afficherUpdatePromo=true">Modifier promotion</button>
-            <button (click)="updateSale(0, product, product.price)">Retirer promotion</button>
-            <div *ngIf="afficherUpdatePromo == true">
-               <input required [(ngModel)]="promotionChange"/>
-               <button (click)="updateSale(promotionChange, product, product.price)">Valider</button> 
-            </div>  
-         </li>                   
-        <li>
-            Quantité stock : {{product.quantity}} 
-            <button (click)="afficherUpdateStock=true">Modifier Quantité</button>
-            <div *ngIf="afficherUpdateStock == true">
-               <input type="text" required [(ngModel)]="quantityChange" />
+                     <div class="row" *ngIf="product">
+                        <p>Id : {{product.id}}</p>
+                     </div>
+                     <div class="row" *ngIf="product">
+                        <p>Nom : {{product.name}}</p>
+                     </div>
+                     <div class="row" *ngIf="product">
+                        <p>Prix : {{product.price}} €</p>
+                     </div>
+                     <div class="row">
+                        <ng-container *ngIf="product.sale == true">
+                           <p>Prix en promotion : {{product.discount}} €</p>
+                        </ng-container>
+                        <div *ngIf="afficherUpdatePromo == true">
+                           <input required [(ngModel)]="promotionChange"/>
+                           <button (click)="updateSale(promotionChange, product, product.price)">Valider</button> 
+                        </div> 
+                     </div>                   
+                     <div class="row">
+                           Quantité stock : {{product.quantity}} 
+                           <div *ngIf="afficherUpdateStock == true">
+                              <input type="text" required [(ngModel)]="quantityChange" />
+                              <select (change)='getOperation($event.target.value)'>
+                                 <option value="Vendu">Vendu</option>
+                                 <option value="Perimer">Perimer</option>
+                                 <option value="Ajouter">Ajouter</option>
+                              </select>
 
+<<<<<<< HEAD
                <select (change)='getOperation($event.target.value)'>
                   <option value="Vendu">Vendu</option>
                   <option value="Perimer">Perimer</option>
@@ -42,13 +55,38 @@
                </ng-container>
                
                <button (click)="updateStock(quantityChange, product, product.price, product.discount, product.category)">Valider</button>
+=======
+                              <ng-container *ngIf="afficherPrixAjout == true">
+                                 <input type="text" required [(ngModel)]="prixAjout" placeholder="Prix de l'ajout" />
+                              </ng-container>
+                              
+                              <button>Valider</button>
+                           </div>
+                        </div>        
+                     <div class="row">
+                           Nombre d'article vendus : {{product.quantitySold}}
+                     </div>
+                     <div class="row">
+                           Commentaire : {{product.comments}}
+                     </div> 
+                  </div>
+               </div>
+               <div class="card-footer">
+                  <div class="row">
+                     <div class="col-sm 4">
+                        <button class="btn btn-primary" (click)="afficherUpdateStock=true">Modifier Quantité</button>
+                     </div>
+                     <div class="col-sm 4">
+                        <button class="btn btn-primary" (click)="afficherUpdatePromo=true">Modifier promotion</button>
+                     </div>
+                     <div class="col-sm 4">
+                        <button class="btn btn-primary" (click)="updateSale(0, product, product.price)" *ngIf="product.discount">Retirer promotion</button>
+                     </div>
+               </div>
+>>>>>>> 7cb7f07702a3b4226cf6cb549ba1907fb616f790
             </div>
-         </li>        
-        <li>
-            Nombre d'article vendus : {{product.quantitySold}}
-         </li>
-        <li>
-            Commentaire : {{product.comments}}
-         </li>        
-    </ul>
+         </div>
+      </div>
+   </div>
 </div>
+   
